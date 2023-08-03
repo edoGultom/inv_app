@@ -61,9 +61,6 @@ return [
                 'crud-custom'   => [
                     'class' => 'common\customgenerator\generator_custom\Generator',
                 ],
-                'crud_redis'   => [
-                    'class' => 'common\generatorredis\GeneratorWithRedis',
-                ],
             ],
 
         ],

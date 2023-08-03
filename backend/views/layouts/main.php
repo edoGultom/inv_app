@@ -3,8 +3,8 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use backend\assets\AppAsset;
 use common\widgets\Alert;
+use backend\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
@@ -15,67 +15,76 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="/img/logo.ico">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    }     
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
-    }
-    NavBar::end();
-    ?>
-</header>
+    <?php $this->beginBody() ?>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <aside class="aside aside-fixed">
+        <!-- headers -->
+        <?= $this->render('aside-header') ?>
+        <!-- close headers -->
+
+        <div class="aside-body">
+            <!-- loggedin -->
+            <?= $this->render('aside-loggedin') ?>
+            <!-- close loggedin -->
+
+            <!-- menus -->
+            <?= $this->render('menus') ?>
+            <!-- close menus -->
+
+        </div>
+    </aside>
+    <!-- <div class="aside-header">
+    <a href="../../index.html" class="aside-logo">
+        <div class=" d-flex flex-row align-items-center gap-3 text-dark">
+            <img src="/img/logo.png" alt="" width="31" height="38" />
+            <div class="logo-kinerja">
+                <span class="text-danger fw-bold">E-KINERJA</span>
+                <span class="fw-bold">PEMERINTAHAN</span>
+                <span class="fw-bold">KOTA MEDAN</span>
+            </div>
+        </div>
+    </a>
+    <a href="" class="aside-menu-link">
+        <i data-feather="menu"></i>
+        <i data-feather="x"></i>
+    </a>
+</div> -->
+    <div class="content ht-100v pd-0">
+        <div class="content-header">
+            <div class="content-search"></div>
+
+
+            <!-- <nav class="nav">
+                <a href="" class="nav-link"><i data-feather="help-circle"></i></a>
+                <a href="" class="nav-link"><i data-feather="grid"></i></a>
+                <a href="" class="nav-link"><i data-feather="align-left"></i></a>
+            </nav> -->
+        </div><!-- content-header -->
+
+        <div class="content-body">
+            <!-- <div class="container pd-x-0"> -->
+            <?= $content ?>
+            <!-- </div> -->
+        </div>
     </div>
-</main>
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
+
+
 </html>
 <?php $this->endPage();

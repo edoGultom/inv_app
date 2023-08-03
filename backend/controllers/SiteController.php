@@ -79,11 +79,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            if ($model->validateAccess('Admin') && $model->login()) {
-                return $this->goBack();
-            }
-
-            Yii::$app->session->setFlash('error', "Anda tidak berhak untuk mengakses halaman ini. Silahkan hubungi admin.");
+            return $this->goBack();
         } else {
             $model->password = '';
 

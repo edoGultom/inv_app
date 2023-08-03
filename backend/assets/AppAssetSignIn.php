@@ -14,13 +14,14 @@ class AppAssetSignIn extends AssetBundle
     public $css = [
         'css/dashforge.css',
         'css/dashforge.auth.css',
-        'lib/@fortawesome/fontawesome-free/css/all.min.css',
+        'lib/remixicon/fonts/remixicon.css',
         'css/custom.css',
     ];
     public $js = [
         // 'lib/jquery/jquery.min.js',
         'lib/bootstrap/js/bootstrap.bundle.min.js',
-        // 'lib/perfect-scrollbar/perfect-scrollbar.min.js',
+        'lib/feather-icons/feather.min.js',
+        'lib/perfect-scrollbar/perfect-scrollbar.min.js',
         'js/dashforge.js',
     ];
     public $depends = [
