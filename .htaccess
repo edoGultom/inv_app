@@ -1,0 +1,20 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+#frontend
+RewriteCond %{REQUEST_URI} ^/(assets|css)  
+RewriteRule ^assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ backend/web/css/$1 [L]
+RewriteRule ^data/(.*)$ backend/web/data/$1 [L]
+RewriteRule ^fonts/(.*)$ backend/web/fonts/$1 [L]
+RewriteRule ^img/(.*)$ backend/web/img/$1 [L]
+RewriteRule ^js/(.*)$ backend/web/js/$1 [L]
+RewriteRule ^lib/(.*)$ backend/web/lib/$1 [L]
+RewriteRule ^common/(.*)$ common/$1 [L]
+
+#---- all ----#
+RewriteCond %{REQUEST_URI} !^/(backend)/web/(assets|css|data|fonts|img|js|lib)/  
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ backend/web/index.php
