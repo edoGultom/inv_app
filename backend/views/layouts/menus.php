@@ -19,7 +19,23 @@ $menuItems[] = [
         'options' => ['class' => 'nav-item'],
         'url' => ['/site/index']
 ];
-
+$menuItems[] = [
+        'label' => '<i class="fa-solid fa-folder-plus me-2"></i> <span>Barang</span>',
+        'options' => ['class' => 'nav-item with-sub'],
+        'url' => "#",
+        'items' => [
+                [
+                        'label' => 'Referensi Barang',
+                        'url' => ['/ref-kategori-barang/index'],
+                        'template' => '<a href="{url}" >{label}</a>',
+                ],
+                [
+                        'label' => 'Data Barang',
+                        'url' => ['/barang/index'],
+                        'template' => '<a href="{url}" >{label}</a>',
+                ],
+        ],
+];
 if (Yii::$app->user->can('Verifikator')) {
         $menuItems[] = [
                 'label' => 'Pengaturan',
