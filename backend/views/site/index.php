@@ -4,13 +4,9 @@
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-    </div>
+<div class="jumbotron text-center bg-transparent">
+    <h1 class="display-5">Congratulations!</h1>
+    <img src="/img/dashboard.svg" width="600" height="600" alt="">
+    <p class="lead">You have successfully login.</p>
 
 </div>

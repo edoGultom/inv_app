@@ -34,6 +34,22 @@ class m230803_040256_table_pengusulan extends Migration
             'nama_unit' => $this->text(),
             'cepat_kode' => $this->string(),
         ]);
+
+        $this->batchInsert(
+            'ref_unit',
+            [
+                'nama_unit',
+                'cepat_kode'
+            ],
+            [
+                ["SEKRETARIAT", '0207010000'],
+                ["BIDANG PENGADAAN, PEMBERHENTIAN DAN INFORMASI", '0207020000'],
+                ["BIDANG PENGEMBANGAN APARATUR", '0207040000'],
+                ["BIDANG MUTASI DAN PROMOSI", '0207030000'],
+                ["BIDANG PENILAIAN KINERJA APARATUR DAN PENGHARGAAN", '0207050000'],
+                ["BIDANG KELOMPK JABATAN FUNGSIONAL", '0207060000'],
+            ]
+        );
         $this->createTable('{{%pengusulan_barang}}', [
             'id' => $this->primaryKey(),
             'id_barang' => $this->integer(),
