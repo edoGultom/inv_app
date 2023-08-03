@@ -108,6 +108,10 @@ body {
   --bs-btn-disabled-border-color: var(--btn-warning-n) !important;
 }
 
+.aside-header {
+  background-color: #ECD1D1 !important;
+}
+
 .btn-secondary {
   --bs-btn-color: #0A0A0A;
   --bs-btn-bg: var(--btn-secondary-n) !important;

@@ -19,24 +19,38 @@ $menuItems[] = [
         'options' => ['class' => 'nav-item'],
         'url' => ['/site/index']
 ];
-$menuItems[] = [
-        'label' => '<i class="fa-solid fa-folder-plus me-2"></i> <span>Barang</span>',
-        'options' => ['class' => 'nav-item with-sub'],
-        'url' => "#",
-        'items' => [
-                [
-                        'label' => 'Referensi Barang',
-                        'url' => ['/ref-kategori-barang/index'],
-                        'template' => '<a href="{url}" >{label}</a>',
-                ],
-                [
-                        'label' => 'Data Barang',
-                        'url' => ['/barang/index'],
-                        'template' => '<a href="{url}" >{label}</a>',
-                ],
-        ],
-];
 if (Yii::$app->user->can('Verifikator')) {
+
+        $menuItems[] = [
+                'label' => '<i class="fa-solid fa-folder-plus me-2"></i> <span>Barang</span>',
+                'options' => ['class' => 'nav-item with-sub'],
+                'url' => "#",
+                'items' => [
+                        [
+                                'label' => 'Data Barang',
+                                'url' => ['/barang/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                ],
+        ];
+
+        $menuItems[] = [
+                'label' => '<i class="fa-solid fa-file-lines me-2"></i> <span>Referensi</span>',
+                'options' => ['class' => 'nav-item with-sub'],
+                'url' => "#",
+                'items' => [
+                        [
+                                'label' => 'Referensi Barang',
+                                'url' => ['/ref-kategori-barang/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                        [
+                                'label' => 'Ref Unit',
+                                'url' => ['/ref-unit/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                ],
+        ];
         $menuItems[] = [
                 'label' => 'Pengaturan',
                 'options' => ['class' => 'nav-label mg-t-25']
