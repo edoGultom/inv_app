@@ -1,6 +1,6 @@
 <div class="aside-header">
     <a href="/" class="aside-logo">
-        pengadaan<span>barang</span>
+        Pengadaan<span> Barang</span>
     </a>
     <a href="" class="aside-menu-link">
         <i data-feather="menu"></i>

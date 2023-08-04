@@ -14,6 +14,8 @@ if ($statusCode == 404) {
     $img = ' <img src="/img/404.svg" class="img-fluid" alt="">';
 } elseif ($statusCode == 503) {
     $img = ' <img src="/img/503.svg" class="img-fluid" alt="">';
+} elseif ($statusCode == 403) {
+    $img = ' <img src="/img/403.svg" width="300" height="400" class="img-fluid" alt="">';
 }
 ?>
 <div class="content content-fixed content-auth-alt">

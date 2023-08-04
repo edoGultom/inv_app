@@ -19,6 +19,17 @@ $menuItems[] = [
         'options' => ['class' => 'nav-item'],
         'url' => ['/site/index']
 ];
+
+if (Yii::$app->user->can('ASN')) {
+        $menuItems[] = [
+                'label' => '
+                <div class="d-flex flex-row justify-content-between align-items-center w-100">
+                        <span><i class="fas fa-toolbox me-2"></i>Barang</span>
+                </div>',
+                'options' => ['class' => 'nav-item'],
+                'url' => ['/barang-usulan/index']
+        ];
+}
 if (Yii::$app->user->can('Verifikator')) {
 
         $menuItems[] = [
@@ -51,10 +62,13 @@ if (Yii::$app->user->can('Verifikator')) {
                         ],
                 ],
         ];
-        $menuItems[] = [
-                'label' => 'Pengaturan',
-                'options' => ['class' => 'nav-label mg-t-25']
-        ];
+}
+
+$menuItems[] = [
+        'label' => 'Pengaturan',
+        'options' => ['class' => 'nav-label mg-t-25']
+];
+if (Yii::$app->user->can('Verifikator')) {
         $menuItems[] = [
                 'label' => '
                 <div class="d-flex flex-row justify-content-between align-items-center w-100">

@@ -21,7 +21,6 @@ class m230403_072646_add_data_auth extends Migration
             ],
             [
                 ['Verifikator', '1', time()],
-                ['ASN', '1', time()],
             ]
         );
 

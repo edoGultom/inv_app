@@ -40,4 +40,10 @@ class RefKategoriBarang extends \yii\db\ActiveRecord
             'kategori' => 'Kategori',
         ];
     }
+    public function getJlhTipeKategori()
+    {
+        return Barang::find()->where([
+            'id_kategori' => $this->id
+        ])->count();
+    }
 }

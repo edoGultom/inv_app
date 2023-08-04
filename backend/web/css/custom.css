@@ -108,9 +108,6 @@ body {
   --bs-btn-disabled-border-color: var(--btn-warning-n) !important;
 }
 
-.aside-header {
-  background-color: #ECD1D1 !important;
-}
 
 .btn-secondary {
   --bs-btn-color: #0A0A0A;
@@ -131,6 +128,10 @@ body {
 
 .text-info {
   color: var(--btn-info-n) !important;
+}
+
+.inp-search>div:nth-of-type(1) {
+  margin-bottom: unset !important;
 }
 
 .text-warning {

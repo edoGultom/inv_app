@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Barang;
+use common\models\PengusulanBarang;
 
 /**
- * BarangSearch represents the model behind the search form about `common\models\Barang`.
+ * BarangUsulanSearch represents the model behind the search form about `common\models\PengusulanBarang`.
  */
-class BarangSearch extends Barang
+class BarangUsulanSearch extends PengusulanBarang
 {
     public $cari;
     public $rowdata;
@@ -20,9 +20,9 @@ class BarangSearch extends Barang
     public function rules()
     {
         return [
-            [['id', 'id_kategori', 'stok'], 'integer'],
-            [['nama_barang', 'keterangan'], 'safe'],
-            [['cari', 'rowdata'], 'safe'],
+            [['id', 'id_barang', 'id_user', 'jumlah', 'status'], 'integer'],
+            [['cepat_kode_unit', 'nama_barang', 'tanggal', 'keterangan'], 'safe'],
+            [['cari','rowdata'], 'safe'],
         ];
     }
 
@@ -45,13 +45,13 @@ class BarangSearch extends Barang
     public function search($params)
     {
         $this->load($params);
-        $query = Barang::find();
+        $query = PengusulanBarang::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            // 'pagination' => [
-            //     'pageSize' => (!empty($this->rowdata)) ? $this->rowdata : 10,
-            // ],
+            'pagination' => [
+                'pageSize' => (!empty($this->rowdata)) ? $this->rowdata : 10,
+            ],
         ]);
 
 
@@ -61,15 +61,20 @@ class BarangSearch extends Barang
             return $dataProvider;
         }
         $cari_angka = '';
-        if (is_numeric($this->cari)) {
+        if(is_numeric($this->cari)){
             $cari_angka = $this->cari;
         }
 
-        $query->andFilterWhere([
-            'or',
-
-            ['ilike', 'lower(nama_barang)', strtolower($this->cari)],
-            ['ilike', 'lower(keterangan)', strtolower($this->cari)],
+        $query->andFilterWhere(['or',
+            ['id' => $cari_angka],
+            ['id_barang' => $cari_angka],
+            ['id_user' => $cari_angka],
+            ['jumlah' => $cari_angka],
+            ['tanggal' => $cari_angka],
+            ['status' => $cari_angka],
+            ['ilike', 'cepat_kode_unit', $this->cari],
+            ['ilike', 'nama_barang', $this->cari],
+            ['ilike', 'keterangan', $this->cari],
         ]);
         // $query->andFilterWhere(['ilike', '', $this->cari]);
         return $dataProvider;
