@@ -51,7 +51,7 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
         // jika button aksi berjajar ke bawah
-        'template' => '<div class="d-flex align-items-start flex-column" style="width:100px">{edit} {delete} {view} {detail}</div>',
+        'template' => '<div class="d-flex align-items-center justify-content-center flex-column" style="width:100px">{edit} {delete} {view} {detail}</div>',
         'width' => '10%',
         // jika button aksi berjajar ke samping
         // 'template' => '{edit} {delete} {view} {detail}',
@@ -59,7 +59,7 @@ return [
         'vAlign' => 'middle',
         'buttons' => [
             "edit" => function ($url, $model, $key) {
-                return Html::a('<i data-feather="edit" width="16" height="16" class="me-1 align-middle"></i> Ubah', ['update', 'id' => $model->id], [
+                return Html::a('<i class="fas fa-edit" width="16" height="16" class="me-1 align-middle"></i>', ['update', 'id' => $model->id], [
                     'class' => 'btn btn-warning btn-block',
                     'role' => 'modal-remote',
                     'title' => 'Edit',
@@ -67,7 +67,7 @@ return [
                 ]);
             },
             "delete" => function ($url, $model, $key) {
-                return Html::a('<i data-feather="trash" width="16" height="16" class="me-1 align-middle"></i> Hapus', ['delete', 'id' => $model->id], [
+                return Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i>', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-block mt-2',
                     'role' => 'modal-remote', 'title' => 'Hapus',
                     'data-confirm' => false, 'data-method' => false, // for overide yii data api
@@ -80,7 +80,7 @@ return [
                 ]);
             },
             "view" => function ($url, $model, $key) {
-                return Html::a('<i data-feather="eye" width="16" height="16" class="me-1 align-middle"></i> Lihat', ['view', 'id' => $model->id], [
+                return Html::a('<i class="fas fa-eye" width="16" height="16" class="me-1 align-middle"></i>', ['view', 'id' => $model->id], [
                     'class' => 'btn btn-info btn-block mt-2',
                     'role' => 'modal-remote',
                     'title' => 'Lihat',

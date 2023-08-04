@@ -29,7 +29,6 @@ $this->title = "<?= Inflector::camel2words(StringHelper::basename($generator->mo
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
-$appendBtn = '<span class="ic-search"><i data-feather="search" width="16" height="16"></i></span>';
 $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
 ?>
 
@@ -57,7 +56,7 @@ $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
                     'heading' => '<div class="d-flex justify-content-between align-items-center">
                                     <h5 class="m-0 text-dark title-index" style="text-transform:uppercase"><?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?></h5>' .
                                     Html::a(
-                                        '<div class="d-flex align-items-center"><span class="align-middle"><i data-feather="plus-circle" class="me-1"></i></span> Tambah <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?></div>',
+                                        '<div class="d-flex align-items-center"><i class="fas fa-solid fa-square-plus  me-1"></i> Tambah <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?></div>',
                                         ['create'],
                                         ['role' => 'modal-remote', 'title' => 'Tambah <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?>', 'class' => 'btn btn-danger btn-sm']
                                     ) . 

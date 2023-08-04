@@ -43,7 +43,7 @@ $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
                 'heading' => '<div class="d-flex justify-content-between align-items-center">
                                     <h5 class="m-0 text-dark title-index" style="text-transform:uppercase">Barang</h5>' .
                     Html::a(
-                        '<div class="d-flex align-items-center"><span class="align-middle"><i data-feather="plus-circle" class="me-1"></i></span> Tambah Barang</div>',
+                        '<div class="d-flex align-items-center"><i class="fas fa-solid fa-square-plus me-1" ></i> Tambah Barang</div>',
                         ['create'],
                         ['role' => 'modal-remote', 'title' => 'Tambah Barang', 'class' => 'btn btn-danger btn-sm']
                     ) .
