@@ -61,6 +61,10 @@ class Barang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RefKategoriBarang::className(), ['id' => 'id_kategori']);
     }
+    public function getIsUsulan()
+    {
+        return $this->hasOne(PengusulanBarang::className(), ['id_barang' => 'id'])->exists();
+    }
     public function getDataKategori()
     {
         return ArrayHelper::map(RefKategoriBarang::find()->all(), 'id', 'kategori');

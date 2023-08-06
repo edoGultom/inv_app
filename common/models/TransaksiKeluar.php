@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+
 use common\components\UserBehavior;
 
 use Yii;
@@ -57,5 +58,28 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
             'tanggal' => 'Tanggal',
             'keterangan' => 'Keterangan',
         ];
+    }
+
+    public function saveDetail($jumlah)
+    {
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = new DetailTransaksikeluar();
+            $model->id_transaksi_keluar = $this->id;
+            $model->id_barang = $this->id_barang;
+            $model->jumlah = $jumlah;
+            if ($model->save()) {
+                $transaction->commit();
+                return true;
+            }else
+            return false;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 }

@@ -147,7 +147,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
             $model->tanggal = date('Y-m-d');
             $model->keterangan = $this->keterangan;
 
-            if ($model->save() && $this->setNewStok($this->jumlah)) {
+            if ($model->save() && $this->setNewStok($this->jumlah) && $model->saveDetail($this->jumlah)) {
                 $transaction->commit();
                 return true;
             } else {
