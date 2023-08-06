@@ -61,7 +61,7 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                         [
-                                'label' => 'Ref Unit',
+                                'label' => 'Referensi Unit',
                                 'url' => ['/ref-unit/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
