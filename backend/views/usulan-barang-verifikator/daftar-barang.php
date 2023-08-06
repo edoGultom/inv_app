@@ -103,7 +103,7 @@ use yii\widgets\Pjax;
                                 <td class="tx-medium text-right">Status : <?= $value->tahap ?></td>
                                 <td align="center">
                                     <?= Html::a(
-                                        '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 text-success"></i>',
+                                        '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 tx-success"></i>',
                                         ['terima', 'id' => $value->id],
                                         [
                                             'role' => 'modal-remote',
