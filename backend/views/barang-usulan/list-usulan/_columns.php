@@ -61,7 +61,7 @@ return [
 
                 }
                 if(empty($model->status)){
-                    $btn ='<div class="d-flex flex-column justify-content-center align-items-center">'. Html::a(
+                    $btn ='<div class="d-flex flex-column justify-content-center align-items-left">'. Html::a(
                         '<i class="fa-solid fa-square-arrow-up-right"></i> Kirim Usulan',
                         ['kirim-usulan', 'id' => $model->id],
                         [

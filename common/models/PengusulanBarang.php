@@ -84,6 +84,11 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
     }
+    public function getCheckStock()
+    {
+        $stok = $this->barang->stok ?? 0;
+        return  $stok-$this->jumlah;
+    }
     public function getTahap()
     {
         $model = $this->hasOne(Refstatus::className(), ['id' => 'status'])->one();

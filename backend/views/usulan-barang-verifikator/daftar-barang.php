@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\widgets\Pjax;
 
 ?>
-<?php Pjax::begin(['id' => 'usulan-pjax']) ?>
+<?php Pjax::begin(['id' => 'verifikasi-usulan-pjax']) ?>
 
 <div class="col-lg-12 col-xl-12 mg-t-10">
     <div class="card mg-b-10">
@@ -77,7 +77,7 @@ use yii\widgets\Pjax;
         <div class="mx-3">
             <?php
             if (empty($data)) {
-                echo '<div class="col text-center m-2 text-muted" style="background-color:var(--secondary-light);">Data Tidak Ditemukan </div>';
+                echo '<div class="col bg-secondary-light text-center m-2 tx-secondary p-3 rounded" style="background-color:var(--secondary-light);">Data Tidak Ditemukan </div>';
             } else {
             ?>
                 <table class="table table-dashboard mg-b-0">
@@ -95,12 +95,18 @@ use yii\widgets\Pjax;
                         <?php
                         $no = 1;
                         foreach ($data as $key => $value) {
+                            $labelPermintaan = ($value->checkStock < 1) ?  'text-danger' : 'tx-teal';
+                            $text = ($value->checkStock < 1) ? '<span class="tx-10"> (<i>Melebihi Stok</i>)</span>' : '';
+                            $jlh = '<span class="' . $labelPermintaan . '">' . $value->jumlah . $text . '</span>';
                         ?>
                             <tr>
                                 <td class="tx-color-03 tx-normal"><?= Yii::$app->formatter->asDate($value->tanggal, 'php:d F Y')  ?></td>
-                                <td class="tx-normal tx-color-03 text-right"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
+                                <td class="tx-normal text-right"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
                                 <td class="tx-medium text-right"><?= $value->nama_barang ?></td>
-                                <td class="tx-medium text-right">Status : <?= $value->tahap ?></td>
+                                <td class="tx-medium text-right">
+                                    <div>Stok : <span class="tx-teal"><?= $value->barang->stok ?> </span></div>
+                                    <div>Jumlah Permintaan (<small>Qty</small>) : <?= $jlh ?></div>
+                                </td>
                                 <td align="center">
                                     <?= Html::a(
                                         '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 tx-success"></i>',

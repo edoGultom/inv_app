@@ -137,7 +137,7 @@ class BarangUsulanController extends Controller
                 'size' => "small",
                     'content' => '
                     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                        <img src="/img/success.png" width="100" >
+                        <img src="/img//img/success.gif" width="100" >
                         <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil mengirim usulan</span>
                     </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) 
@@ -156,7 +156,8 @@ class BarangUsulanController extends Controller
     public function actionTambahKeUsulan($id)
     {
         $request = Yii::$app->request;
-        $barang = $this->findModel($id);
+        // $barang = $this->findModel($id);
+        $barang = Barang::findOne($id);
 
         $model = new PengusulanBarang();
         $model->id_barang = $id;
@@ -165,16 +166,19 @@ class BarangUsulanController extends Controller
         $model->save(false);
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'forceReload' => '#crud-datatable-usulan-pjax',
-                'title' => "Tambah Ke Usulan",
-                'content' => '
-                        <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img/success.png" >
-                            <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
-                        </div>',
-                'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
-            ];
+            // return [
+            //     'forceReload' => '#crud-datatable-usulan-pjax',
+            //     'size' => "small",
+            //     'title' => "Tambah Ke Usulan",
+            //     'content' => '
+            //             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+            //                 <img src="/img//img/success.gif" >
+            //                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
+            //             </div>',
+            //     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+            // ];
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-usulan-pjax'];
+
         } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -232,7 +236,7 @@ class BarangUsulanController extends Controller
                     'title' => "Tambah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img/success.png" >
+                                <img src="/img//img/success.gif" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
@@ -294,7 +298,7 @@ class BarangUsulanController extends Controller
                     'title' => "Ubah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img/success.png" >
+                                <img src="/img//img/success.gif" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -340,16 +344,8 @@ class BarangUsulanController extends Controller
             * Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'forceReload' => '#crud-datatable-pjax',
-                'title' => "Hapus Barang",
-                'content' => '
-                        <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img/success.png" >
-                            <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus Barang</span>
-                        </div>',
-                'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
-            ];
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-usulan-pjax'];
+
         } else {
             /*
             * Process for non-ajax request
@@ -397,7 +393,7 @@ class BarangUsulanController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Barang::findOne($id)) !== null) {
+        if (($model = PengusulanBarang::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -92,14 +92,18 @@ use yii\bootstrap5\ActiveForm;
                             <td class="tx-medium text-right"><?= $value->nama_barang ?></td>
                             <td class="tx-medium text-right"><?= $value->keterangan ?></td>
                             <td align="center">
-                                <?=Html::a(
-                                '<i class="fa-2x fa-solid fa-square-plus wd-12 ht-12 stroke-wd-3 text-danger"></i>',
-                                ['tambah-ke-usulan', 'id' => $value->id],
-                                [
-                                    'role' => 'modal-remote',
-                                    'class' => 'mx-2 ',
-                                ]
-                            );?>
+                                <?=
+                                Html::a('<i class="fa-2x fa-solid fa-square-plus wd-12 ht-12 stroke-wd-3 text-danger"></i>', ['tambah-ke-usulan', 'id' => $value->id], [
+                                    'class' => ' mx-2',
+                                    'role' => 'modal-remote', 'title' => 'Tambah',
+                                    'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                                    'data-request-method' => 'post',
+                                    'data-toggle' => 'tooltip',
+                                    'data-confirm-title' => 'Tambah',
+                                    'data-confirm-ok' => 'Yakin',
+                                    'data-confirm-cancel' => 'Kembali',
+                                    'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
+                                ])?>
                         </tr>
                     <?php
                     }

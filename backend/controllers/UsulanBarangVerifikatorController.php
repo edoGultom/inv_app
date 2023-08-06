@@ -79,7 +79,59 @@ class UsulanBarangVerifikatorController extends Controller
             'refStatus' => $refStatus,
         ]);
     }
-
+    public function actionTolak($id)
+    {
+        $request = Yii::$app->request;
+        $model = PengusulanBarang::findOne($id);
+        $model->keterangan = NULL;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($request->isGet) {
+                return [
+                    'title' => "Penolakan Usulan",
+                    'size' => "small",
+                    'content' => $this->renderAjax('_form_tolak', [
+                        'model' => $model
+                    ]),
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post())) {
+                if ($model->setTahap(PengusulanBarang::TOLAK_USULAN, $model->keterangan)) {
+                    return [
+                        'forceReload' => '#verifikasi-usulan-pjax',
+                        'size' => 'small',
+                        'title' => "Penolakan Usulan",
+                        'content' => '
+                            <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                                <img src="/img/success.svg" >
+                                <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil melakukan penolakan</span>
+                            </div>',
+                        'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                    ];
+                }
+                return [
+                    'title' => "Penolakan Usulan",
+                    'forceReload' => '#verifikasi-usulan-pjax',
+                    'size' => "small",
+                    'content' => '<div class="alert alert-danger">Gagal membatalkan usulan</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                ];
+            } else {
+                return [
+                    'title' => "Penolakan Usulan",
+                    'size' => "small",
+                    'content' => '<div class="alert alert-danger">Gagal membatalkan usulan</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Simpan', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
+                ];
+            }
+        } else {
+            return $this->render('_form_tolak', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+    }
     public function actionTerima($id)
     {
         $request = Yii::$app->request;
@@ -90,11 +142,11 @@ class UsulanBarangVerifikatorController extends Controller
             if ($model->setTahap(PengusulanBarang::TERIMA_USULAN)) {
                 return [
                     'title' => "Informasi",
-                    'forceReload' => '#usulan-pjax',
+                    'forceReload' => '#verifikasi-usulan-pjax',
                     'size' => "small",
                     'content' => '
                     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                        <img src="/img/success.png" width="100" >
+                        <img src="/img/success.gif" width="250" >
                         <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil memverifikasi usulan</span>
                     </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

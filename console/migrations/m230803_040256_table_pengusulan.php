@@ -26,8 +26,8 @@ class m230803_040256_table_pengusulan extends Migration
             [
                 [1, "Mengirim Usulan"],
                 [2, "Usulan Diterima"],
-                [3, "Verifikator Beri Tawaran"],
-                [4, "Menerima Tawaran"],
+                [3, "Terima Bersyarat Verifikator"],
+                [4, "Terima Bersyarat ASN"],
                 [99, "Usulan Ditolak"],
             ]
         );
