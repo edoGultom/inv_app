@@ -33,8 +33,8 @@ class PengusulanBarang extends \yii\db\ActiveRecord
      */
     const KIRIM_USULAN = 1;
     const TERIMA_USULAN = 2;
-    const BERI_TAWARAN = 3;
-    const TERIMA_TAWARAN = 4;
+    const TERIMA_BERSYARAT_VERIFIKATOR = 3;
+    const TERIA_BERSYARAT_ASN = 4;
     const TOLAK_USULAN = 99;
 
     public function rules()

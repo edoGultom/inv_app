@@ -123,11 +123,20 @@ use yii\widgets\Pjax;
                                             'class' => 'btn p-0',
                                             'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
                                         ]
+                                    ). Html::a(
+                                        '<i class="fa-2x fa-solid fa-check-to-slot wd-12 ht-12 stroke-wd-3 tx-warning"></i>',
+                                        ['terima-bersyarat', 'id' => $value->id],
+                                        [
+                                            'role' => 'modal-remote',
+                                            'title' => 'Terima Bersyarat',
+                                            'class' => 'btn p-0',
+                                        ]
                                     ) . Html::a(
                                         '<i class="fa-2x fa-solid fa-square-xmark wd-12 ht-12 stroke-wd-3 text-danger"></i>',
                                         ['tolak', 'id' => $value->id],
                                         [
                                             'role' => 'modal-remote',
+                                            'title' => 'Tolak',
                                             'class' => 'btn p-0',
                                         ]
                                     ); ?>

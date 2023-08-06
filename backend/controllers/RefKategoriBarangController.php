@@ -113,7 +113,7 @@ class RefKategoriBarangController extends Controller
                     'title' => "Tambah Ref Kategori Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif" width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Ref Kategori Barang berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
@@ -175,7 +175,7 @@ class RefKategoriBarangController extends Controller
                     'title' => "Ubah Ref Kategori Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif" width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Ref Kategori Barang berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -226,7 +226,7 @@ class RefKategoriBarangController extends Controller
                 'title' => "Hapus Ref Kategori Barang",
                 'content' => '
                         <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img//img/success.gif" >
+                            <img src="/img//img/success.gif"  width="150">
                             <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus Ref Kategori Barang</span>
                         </div>',
                 'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

@@ -14,8 +14,11 @@ use yii\helpers\Url;
 ?>
 
 <div class="tolak-form">
+    <p class="tx-12">Terima Bersayarat, dilakukan jika jumlah barang yang diusulkan mendekati stok</p>
+
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6])->label('Alasan Penolakan') ?>
+    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6])->label('Alasan') ?>
+
     <?php ActiveForm::end(); ?>
 </div>
 </div>

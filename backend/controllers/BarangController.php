@@ -113,7 +113,7 @@ class BarangController extends Controller
                     'title' => "Tambah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif " width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
@@ -175,7 +175,7 @@ class BarangController extends Controller
                     'title' => "Ubah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif " width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -226,7 +226,7 @@ class BarangController extends Controller
                 'title' => "Hapus Barang",
                 'content' => '
                         <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img//img/success.gif" >
+                            <img src="/img//img/success.gif" width="150" >
                             <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus Barang</span>
                         </div>',
                 'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

@@ -114,7 +114,7 @@ class RefUnitController extends Controller
                     'title' => "Tambah Ref Unit",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif " width="150">
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Ref Unit berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
@@ -176,7 +176,7 @@ class RefUnitController extends Controller
                     'title' => "Ubah Ref Unit",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" >
+                                <img src="/img//img/success.gif"  width="150">
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Ref Unit berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -227,7 +227,7 @@ class RefUnitController extends Controller
                 'title' => "Hapus Ref Unit",
                 'content' => '
                         <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img//img/success.gif" >
+                            <img src="/img//img/success.gif" width="150" >
                             <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus Ref Unit</span>
                         </div>',
                 'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
