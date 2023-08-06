@@ -67,14 +67,10 @@ class BarangUsulanSearch extends PengusulanBarang
 
         $query->andFilterWhere(['or',
             ['id' => $cari_angka],
-            ['id_barang' => $cari_angka],
-            ['id_user' => $cari_angka],
             ['jumlah' => $cari_angka],
             ['tanggal' => $cari_angka],
-            ['status' => $cari_angka],
-            ['ilike', 'cepat_kode_unit', $this->cari],
-            ['ilike', 'nama_barang', $this->cari],
-            ['ilike', 'keterangan', $this->cari],
+            ['ilike', 'lower(nama_barang)', strtolower($this->cari)],
+            ['ilike', 'lower(keterangan)', strtolower($this->cari)],
         ]);
         // $query->andFilterWhere(['ilike', '', $this->cari]);
         return $dataProvider;

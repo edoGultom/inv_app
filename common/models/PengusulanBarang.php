@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\UserBehavior;
 use Yii;
 
 /**
@@ -30,6 +31,8 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    const KIRIM_USULAN = 1;
+
     public function rules()
     {
         return [
@@ -38,6 +41,12 @@ class PengusulanBarang extends \yii\db\ActiveRecord
             [['nama_barang', 'keterangan'], 'string'],
             [['tanggal'], 'safe'],
             [['cepat_kode_unit'], 'string', 'max' => 25],
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            UserBehavior::className(),
         ];
     }
 
@@ -58,8 +67,37 @@ class PengusulanBarang extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+    public function setTahap($tahap, $keterangan = NULL)
+    {
+        $this->status = $tahap;
+        $this->keterangan = $keterangan;
+        if ($this->save()) {
+            return true;
+        }
+        return false;
+    }
     public function getBarang()
     {
         return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
+    }
+    public function getTahap()
+    {
+        $model = $this->hasOne(Refstatus::className(), ['id' => 'status'])->one();
+        if ($model) {
+            if ($this->status == 1) {
+                return '<span class="badge text-bg-primary ">' . $model->keterangan . '</span>';
+            } else if ($this->status == 2) {
+                return '<span class="badge text-bg-success">' . $model->keterangan . '</span>';
+            } else if ($this->status == 3) {
+                return '<span class="badge text-bg-warning">' . $model->keterangan . '</span>';
+            } else if ($this->status == 4) {
+                return '<span class="badge text-bg-info">' . $model->keterangan . '</span>';
+            } else {
+                $status =  '<span class="badge text-bg-danger">' . $model->keterangan . '</span>';
+                $alasan = '<p>Keterangan : ' . $this->keterangan . '</p>';
+                return $status . $alasan;
+            }
+        }
+        return false;
     }
 }

@@ -73,10 +73,11 @@ use yii\bootstrap5\ActiveForm;
             <table class="table table-dashboard mg-b-0">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th class="text-right">Kategori Barang</th>
-                        <th class="text-right">Nama Barang</th>
-                        <th class="text-right">Keterangan</th>
+                        <th width="5%">NO</th>
+                        <th  width="15%" class="text-right">Kategori Barang</th>
+                        <th  width="35%" class="text-right">Nama Barang</th>
+                        <th  width="5%"class="text-right">Keterangan</th>
+                        <th style="text-align:center" width="5%" class="text-right">Add List</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +91,15 @@ use yii\bootstrap5\ActiveForm;
                             <td class="tx-normal tx-color-03 text-right"><?= $value->refKategori->kategori ?? '-' ?></td>
                             <td class="tx-medium text-right"><?= $value->nama_barang ?></td>
                             <td class="tx-medium text-right"><?= $value->keterangan ?></td>
+                            <td align="center">
+                                <?=Html::a(
+                                '<i class="fa-2x fa-solid fa-square-plus wd-12 ht-12 stroke-wd-3 text-danger"></i>',
+                                ['tambah-ke-usulan', 'id' => $value->id],
+                                [
+                                    'role' => 'modal-remote',
+                                    'class' => 'mx-2 ',
+                                ]
+                            );?>
                         </tr>
                     <?php
                     }

@@ -33,7 +33,7 @@ $appendBtn =  '<span class="ic-search"><i data-feather="search" width="16" heigh
                 <div class="form-group">
                     <?=
                     Html::submitButton(
-                        '<span class="material-symbols-outlined align-middle">search</span>',
+                        '<span class="fas fa-search"></span> ',
                         [
                             'class' => 'btn btn-primary rounded btn-search',
                             'data-pjax' => true

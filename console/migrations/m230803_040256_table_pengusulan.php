@@ -26,6 +26,8 @@ class m230803_040256_table_pengusulan extends Migration
             [
                 [1, "Kirim Usulan"],
                 [2, "Terima Usulan"],
+                [3, "Beri Tawaran"],
+                [4, "Menerima Tawaran"],
                 [99, "Tolak Usulan"],
             ]
         );

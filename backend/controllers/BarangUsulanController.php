@@ -6,6 +6,7 @@ use backend\models\BarangSearch;
 use Yii;
 use common\models\Barang;
 use backend\models\BarangUsulanSearch;
+use common\models\PengusulanBarang;
 use common\models\RefKategoriBarang;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -51,9 +52,11 @@ class BarangUsulanController extends Controller
      */
     public function actionIndex()
     {
+        // echo   Yii::$app->user->identity->id;die();
         $searchModel = new BarangSearch();
         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         // $model = $dataProvider->getModels(); $query = Artikel::find()->where(['aktif' => 1])->andWhere(['=', 'kategori', ($idKategori) ? $idKategori->id : '']);
+
         $query = Barang::find();
         if ($searchModel->load(Yii::$app->request->queryParams)) {
 
@@ -69,6 +72,33 @@ class BarangUsulanController extends Controller
             ->limit($pagination->limit)
             ->all();
         $refKategori = RefKategoriBarang::find()->all();
+
+        $request = Yii::$app->request;
+        if ($request->isPost) {
+            $data = (object) Yii::$app->request->post();
+            $id = $data->editableKey;
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
+            // exit();
+            $model = PengusulanBarang::find()->where(['id' => $id])->one();
+            $result = '';
+            if (isset($data->keterangan)) {
+                $model->keterangan = $data->keterangan;
+                $result = $data->keterangan;
+            }
+            if (isset($data->jumlah)) {
+                $model->jumlah = $data->jumlah;;
+                $result = $data->jumlah;
+            }
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model->save(false)) {
+                return ['output' => $result, 'message' => ''];
+            } else {
+                return ['output' => 'failed', 'message' => ''];
+            }
+        }
+
         return $this->render('index', [
             'data' => $data,
             'pagination' => $pagination,
@@ -81,6 +111,7 @@ class BarangUsulanController extends Controller
         $searchModel = new BarangUsulanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id]);
+
         return [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -92,6 +123,64 @@ class BarangUsulanController extends Controller
      * @param integer $id
      * @return mixed
      */
+    public function actionKirimUsulan($id)
+    {
+        $request = Yii::$app->request;
+        $model = PengusulanBarang::find()->where(['id' => $id])->one();
+        $model->tanggal = date('Y-m-d');
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model->setTahap(PengusulanBarang::KIRIM_USULAN)) {
+                return [
+                    'title' => "Informasi",
+                'forceReload' => '#crud-datatable-usulan-pjax',
+                'size' => "small",
+                    'content' => '
+                    <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                        <img src="/img/success.png" width="100" >
+                        <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil mengirim usulan</span>
+                    </div>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) 
+                ];
+            } else {
+                return [
+                    'title' => "Informasi",
+                    'size' => "small",
+                    'content' => '<div class="alert alert-danger">Gagal mengirim usulan</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
+                ];
+            }
+        } 
+    }
+    public function actionTambahKeUsulan($id)
+    {
+        $request = Yii::$app->request;
+        $barang = $this->findModel($id);
+
+        $model = new PengusulanBarang();
+        $model->id_barang = $id;
+        $model->cepat_kode_unit = Yii::$app->user->identity->cepat_kode_unit;
+        $model->nama_barang = $barang->nama_barang;
+        $model->save(false);
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'forceReload' => '#crud-datatable-usulan-pjax',
+                'title' => "Tambah Ke Usulan",
+                'content' => '
+                        <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                            <img src="/img/success.png" >
+                            <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
+                        </div>',
+                'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        } else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+    }
     public function actionView($id)
     {
         $request = Yii::$app->request;

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\helpers\ArrayHelper;
+use common\components\UserBehavior;
 
 use Yii;
 
@@ -34,6 +35,12 @@ class Barang extends \yii\db\ActiveRecord
             [['id_kategori', 'stok'], 'default', 'value' => null],
             [['id_kategori', 'stok'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            UserBehavior::className(),
         ];
     }
 
