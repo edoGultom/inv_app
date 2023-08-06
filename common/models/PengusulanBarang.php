@@ -34,7 +34,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     const KIRIM_USULAN = 1;
     const TERIMA_USULAN = 2;
     const TERIMA_BERSYARAT_VERIFIKATOR = 3;
-    const TERIA_BERSYARAT_ASN = 4;
+    const TERIMA_BERSYARAT_ASN = 4;
     const TOLAK_USULAN = 99;
 
     public function rules()
@@ -87,7 +87,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     public function getCheckStock()
     {
         $stok = $this->barang->stok ?? 0;
-        return  $stok-$this->jumlah;
+        return  $stok - $this->jumlah;
     }
     public function getTahap()
     {
@@ -97,16 +97,68 @@ class PengusulanBarang extends \yii\db\ActiveRecord
                 return '<span class="badge bg-primary-light tx-primary ">' . $model->keterangan . '</span>';
             } else if ($this->status == 2) {
                 return '<span class="badge bg-success-light tx-success">' . $model->keterangan . '</span>';
-            } else if ($this->status == 3) {
-                return '<span class="badge bg-warning-light tx-orange">' . $model->keterangan . '</span>';
-            } else if ($this->status == 4) {
-                return '<span class="badge bg-indigo-light tx-indigo">' . $model->keterangan . '</span>';
             } else {
                 $status =  '<span class="badge bg-pink-light tx-pink">' . $model->keterangan . '</span>';
-                $alasan = '<p>Keterangan : ' . $this->keterangan . '</p>';
+                $alasan = '<span class="text-muted">Keterangan :</span> <span>' . $this->keterangan . '</span>';
                 return $status . $alasan;
             }
         }
         return false;
+    }
+    public function getIsVerify()
+    {
+        if ($this->status == self::TERIMA_BERSYARAT_VERIFIKATOR) {
+            return true;
+        }
+        return false;
+    }
+    public function setNewStok($out)
+    {
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $barang = Barang::findOne(['id' => $this->id_barang]);
+            if (!$barang) {
+                return false;
+            }
+            $barang->stok -= $out;
+            if($barang->save()){
+                $transaction->commit();
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+    public function saveTransaksiKeluar()
+    {
+
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = new TransaksiKeluar();
+            $model->id_barang = $this->id_barang;
+            $model->id_usulan = $this->id;
+            $model->tanggal = date('Y-m-d');
+            $model->keterangan = $this->keterangan;
+
+            if ($model->save() && $this->setNewStok($this->jumlah)) {
+                $transaction->commit();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 }

@@ -190,7 +190,7 @@ class UsulanBarangVerifikatorController extends Controller
         $model->keterangan = NULL;
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN)) {
+            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN) && $model->saveTransaksiKeluar()) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#verifikasi-usulan-pjax',

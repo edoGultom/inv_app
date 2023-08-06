@@ -157,6 +157,36 @@ class BarangUsulanController extends Controller
             }
         }
     }
+    public function actionTerima($id)
+    {
+        $request = Yii::$app->request;
+        $model = PengusulanBarang::find()->where(['id' => $id])->one();
+        $model->tanggal = date('Y-m-d');
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_ASN)) {
+                return [
+                    'title' => "Informasi",
+                    'forceReload' => '#crud-datatable-usulan-pjax',
+                    'size' => "small",
+                    'content' => '
+                    <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                        <img src="/img//img/success.gif" width="150" >
+                        <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil menerima data</span>
+                    </div>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                ];
+            } else {
+                return [
+                    'title' => "Informasi",
+                    'size' => "small",
+                    'content' => '<div class="alert alert-danger">Gagal mengirim usulan</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
+                ];
+            }
+        }
+    }
     public function actionTambahKeUsulan($id)
     {
         $request = Yii::$app->request;

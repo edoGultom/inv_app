@@ -3,6 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use kartik\editable\Editable;
+
 return [
 
     [
@@ -21,26 +22,27 @@ return [
             <p style="margin-top:-10px">' . ($model->barang->refKategori->kategori ?? '-') . '</p>
             <p class="text-muted">Nama Barang</p>
             <p style="margin-top:-10px">' . ($model->barang->nama_barang ?? '-') . '</p>';
-           
         },
         'vAlign' => 'middle',
         'encodeLabel' => false,
     ],
-    
-   
+
+
     [
-        'class'=>'\kartik\grid\EditableColumn',
+        'class' => '\kartik\grid\EditableColumn',
         'width' => '10%',
         'label' => 'Jumlah Barang (Qty)',
-        'attribute'=>'jumlah',
-        'editableOptions'=>[
-            'name'=>'jumlah',
+        'attribute' => 'jumlah',
+        'editableOptions' => [
+            'name' => 'jumlah',
             'asPopover' => false,
+            'disabled' => '$data->status > 0 ? true : false',
+            // 'format' => Editable::FORMAT_BUTTON,
             'header' => 'jumlah_barang',
-            'size'=>'sm',
-            'options' => ['class'=>'form-control', 'name'=>'jumlah']
+            'size' => 'sm',
+            'options' => ['class' => 'form-control', 'name' => 'jumlah']
         ],
-      
+
     ],
 
     [
@@ -48,20 +50,19 @@ return [
         'header' => 'Aksi',
         'width' => '15%',
         'contentOptions' => ['style' => 'text-align: left;'],
-        'template' => '{kirim}',
+        'template' => '{kirim}{extra}',
         'buttons' => [
             "kirim" => function ($url, $model, $key) {
                 $tanggal = '';
                 $btn = '';
                 $label = '';
-                if($model->status >= 1){
+                if ($model->status >= 1) {
                     $tanggal =  '<span class="text-muted">Tanggal :</span> 
-                    <span style="margin-top:-10px">' .Yii::$app->formatter->asDate($model->tanggal, 'php:d F Y') . '</span>';
-                $label =  '<span class="text-muted mt-2">Status :</span> '.$model->tahap;
-
+                    <span style="margin-top:-10px">' . Yii::$app->formatter->asDate($model->tanggal, 'php:d F Y') . '</span>';
+                    $label =  '<span class="text-muted mt-2">Status :</span> ' . $model->tahap;
                 }
-                if(empty($model->status)){
-                    $btn ='<div class="d-flex flex-column justify-content-center align-items-left">'. Html::a(
+                if (empty($model->status)) {
+                    $btn = '<div class="d-flex flex-column justify-content-center align-items-left">' . Html::a(
                         '<i class="fa-solid fa-square-arrow-up-right"></i> Kirim Usulan',
                         ['kirim-usulan', 'id' => $model->id],
                         [
@@ -73,7 +74,7 @@ return [
                             'data-confirm-message' => 'Apakah Anda Yakin Ingin Menambah Data ini ???',
                             'class' => 'my-2 btn btn-success d-block',
                         ]
-                    ).Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i> Hapus List', ['delete', 'id' => $model->id], [
+                    ) . Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i> Hapus List', ['delete', 'id' => $model->id], [
                         'class' => 'btn btn-danger d-block',
                         'role' => 'modal-remote', 'title' => 'Hapus List',
                         'data-confirm' => false, 'data-method' => false, // for overide yii data api
@@ -83,10 +84,30 @@ return [
                         'data-confirm-ok' => 'Yakin',
                         'data-confirm-cancel' => 'Kembali',
                         'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
-                    ]).'</div>';
+                    ]) . '</div>';
                 }
-                return $tanggal.'<br/>'.$label.'<br/>'.$btn;
+                return $tanggal . '<br/>' . $label . '<br/>' . $btn;
             },
+            "extra" => function ($url, $model, $key) {
+                if ($model->isVerify) {
+                    return Html::a(
+                        '<span class=" tx-white"><i class="fa-2x fa-solid fa-check wd-12 ht-12 stroke-wd-3"></i> Terima</span>',
+                        ['terima', 'id' => $model->id],
+                        [
+                            'role' => 'modal-remote',
+                            'title' => 'Terima Bersyarat',
+                            'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                            'data-request-method' => 'post',
+                            'data-toggle' => 'tooltip',
+                            'data-confirm-title' => 'Konfirmasi',
+                            'data-confirm-ok' => 'Terima',
+                            'data-confirm-cancel' => 'Tutup',
+                            'class' => 'btn btn-success',
+                            'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
+                        ]
+                    );
+                }
+            }
         ]
     ],
 
