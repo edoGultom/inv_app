@@ -24,11 +24,11 @@ class m230803_040256_table_pengusulan extends Migration
                 'keterangan'
             ],
             [
-                [1, "Kirim Usulan"],
-                [2, "Terima Usulan"],
-                [3, "Beri Tawaran"],
+                [1, "Mengirim Usulan"],
+                [2, "Usulan Diterima"],
+                [3, "Verifikator Beri Tawaran"],
                 [4, "Menerima Tawaran"],
-                [99, "Tolak Usulan"],
+                [99, "Usulan Ditolak"],
             ]
         );
         $this->createTable('{{%ref_unit}}', [

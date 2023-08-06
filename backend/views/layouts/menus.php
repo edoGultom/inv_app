@@ -42,6 +42,11 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'url' => ['/barang/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
+                          [
+                                'label' => 'Verifikasi Barang',
+                                'url' => ['/usulan-barang-verifikator/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
                 ],
         ];
 

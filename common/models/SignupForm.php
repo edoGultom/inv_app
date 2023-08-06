@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use common\models\User;
 use common\models\AuthItem;
 use common\models\AuthAssignment;
@@ -15,8 +16,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-
-
+    public $cepat_kode_unit;
     public $role;
 
 
@@ -42,8 +42,8 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
 
 
-            ['role', 'safe'],
-            ['role', 'required'],
+            [['role','cepat_kode_unit'], 'safe'],
+            [['role','cepat_kode_unit'], 'required'],
         ];
     }
 
@@ -65,6 +65,7 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->cepat_kode_unit = $this->cepat_kode_unit;
         $user->setPassword($this->password);
         $user->generateAuthKey();
 
@@ -85,5 +86,9 @@ class SignupForm extends Model
         }
 
         return true;
+    }
+    public function getRefUnit()
+    {
+        return ArrayHelper::map(RefUnit::find()->all(), 'cepat_kode', 'nama_unit');
     }
 }

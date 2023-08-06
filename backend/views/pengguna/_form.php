@@ -17,7 +17,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email') ?>
 
     <?= $form->field($model, 'password')->passwordInput() ?>
-
+    <?= $form->field($model, 'cepat_kode_unit')->dropdownlist(
+        $model->refUnit,
+        [
+            'prompt' => '-Pilih Unit-',
+        ],
+    )->label('Unit') ?>
     <?= "<h6> Hak Akses </h6>" ?>
     <?= $form->field($model, 'role[]')->checkboxList($role, [
         'item' => function ($index, $label, $name, $checked, $value) {

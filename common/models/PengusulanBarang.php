@@ -32,6 +32,10 @@ class PengusulanBarang extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     const KIRIM_USULAN = 1;
+    const TERIMA_USULAN = 2;
+    const BERI_TAWARAN = 3;
+    const TERIMA_TAWARAN = 4;
+    const TOLAK_USULAN = 99;
 
     public function rules()
     {
@@ -85,15 +89,15 @@ class PengusulanBarang extends \yii\db\ActiveRecord
         $model = $this->hasOne(Refstatus::className(), ['id' => 'status'])->one();
         if ($model) {
             if ($this->status == 1) {
-                return '<span class="badge text-bg-primary ">' . $model->keterangan . '</span>';
+                return '<span class="badge bg-primary-light tx-primary ">' . $model->keterangan . '</span>';
             } else if ($this->status == 2) {
-                return '<span class="badge text-bg-success">' . $model->keterangan . '</span>';
+                return '<span class="badge bg-success-light tx-success">' . $model->keterangan . '</span>';
             } else if ($this->status == 3) {
-                return '<span class="badge text-bg-warning">' . $model->keterangan . '</span>';
+                return '<span class="badge bg-warning-light tx-orange">' . $model->keterangan . '</span>';
             } else if ($this->status == 4) {
-                return '<span class="badge text-bg-info">' . $model->keterangan . '</span>';
+                return '<span class="badge bg-indigo-light tx-indigo">' . $model->keterangan . '</span>';
             } else {
-                $status =  '<span class="badge text-bg-danger">' . $model->keterangan . '</span>';
+                $status =  '<span class="badge bg-pink-light tx-pink">' . $model->keterangan . '</span>';
                 $alasan = '<p>Keterangan : ' . $this->keterangan . '</p>';
                 return $status . $alasan;
             }

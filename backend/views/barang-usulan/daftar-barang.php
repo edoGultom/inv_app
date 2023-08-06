@@ -69,7 +69,7 @@ use yii\bootstrap5\ActiveForm;
                 ?>
             </div>
         </div><!-- card-body -->
-        <div class="table-responsive">
+        <div class="table-responsive mx-3">
             <table class="table table-dashboard mg-b-0">
                 <thead>
                     <tr>
