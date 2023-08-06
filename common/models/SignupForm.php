@@ -76,7 +76,6 @@ class SignupForm extends Model
         $array2 = $this->role;
         for ($i = 0; $i < count($array2); $i++) {
             if (isset($array2[$i])) {
-
                 $auth = new AuthAssignment();
                 $auth->item_name = $array2[$i];
                 $auth->user_id = $iduser;

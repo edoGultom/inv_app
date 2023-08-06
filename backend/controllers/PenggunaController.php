@@ -168,6 +168,7 @@ class PenggunaController extends Controller
             if ($request->isGet) {
                 return [
                     'title' => "Ubah User",
+                    'size'=>'small',
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -177,6 +178,7 @@ class PenggunaController extends Controller
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
+                    'size'=>'small',
                     'title' => "Ubah User",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
@@ -188,6 +190,7 @@ class PenggunaController extends Controller
             } else {
                 return [
                     'title' => "Ubah User",
+                    'size'=>'small',
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),

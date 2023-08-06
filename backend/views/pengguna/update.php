@@ -7,7 +7,7 @@ use yii\bootstrap5\Html;
 ?>
 <div class="user-update">
 
-    <?= $this->render('_form', [
+    <?= $this->render('edit', [
         'model' => $model,
     ]) ?>
 
