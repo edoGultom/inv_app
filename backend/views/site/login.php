@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="wd-100p">
     <h3 class="tx-color-01 mg-b-5">Log In</h3>
-    <p class="tx-color-03 tx-16 mg-b-40">Welcome back! Please signin to continue.</p>
+    <p class="tx-color-03 tx-16 mg-b-40">Welcome back! Please login to continue.</p>
     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
     <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'class' => 'form-group', 'placeholder' => 'Enter your username']) ?>

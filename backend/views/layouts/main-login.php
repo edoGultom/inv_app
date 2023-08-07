@@ -30,11 +30,17 @@ AppAssetSignIn::register($this);
     <div class="content content-fixed content-auth">
         <div class="container">
             <div class="media align-items-stretch justify-content-center ht-100p pos-relative">
-                <div class="media-body align-items-center d-none d-lg-flex">
-                    <div class="mx-wd-600">
+                <div class="media-body align-items-center d-none d-lg-flex flex-column">
+                    <div class="d-flex flex-column">
+                        <span class="aside-logo tx-32">
+                            SIPBANG<span class="tx-24"> BAPEG PROVSU</span>
+
+                        </span>
+                        <p class="tx-14">Sistem Informasi Pendataan Barang</p>
+                    </div>
+                    <div class="mx-wd-500">
                         <img src="/img/sign_in.svg" class="img-fluid" alt="">
                     </div>
-
                 </div><!-- media-body -->
                 <div class="sign-wrapper mg-lg-l-50 mg-xl-l-60">
                     <?= $content ?>
