@@ -150,7 +150,7 @@ class BarangController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $isUpdateStock='no')
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
@@ -162,17 +162,23 @@ class BarangController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
                 return [
-                    'title' => "Ubah Barang",
+                    'title' =>($isUpdateStock=='yes')?  "Update Stock Barang":  "Ubah Barang",
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
+                        'isUpdateStock'=>$isUpdateStock
                     ]),
                     'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
-            } else if ($model->load($request->post()) && $model->save()) {
+            } else if ($model->load($request->post()) ) {
+                if($isUpdateStock=='yes'){
+                    $model->saveTransaksiMasuk();
+                }
+                
+                $model->save();
                 return [
                     'forceReload' => '#crud-datatable-pjax',
-                    'title' => "Ubah Barang",
+                    'title' =>($isUpdateStock=='yes')?  "Update Stock Barang":  "Ubah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
                                 <img src="/img/success.gif " width="150" >
@@ -182,9 +188,10 @@ class BarangController extends Controller
                 ];
             } else {
                 return [
-                    'title' => "Ubah Barang",
+                    'title' =>($isUpdateStock=='yes')?  "Update Stock Barang":  "Ubah Barang",
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
+                        'isUpdateStock'=>$isUpdateStock
                     ]),
                     'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
@@ -199,6 +206,7 @@ class BarangController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'isUpdateStock'=>$isUpdateStock
                 ]);
             }
         }

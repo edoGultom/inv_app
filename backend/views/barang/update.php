@@ -7,8 +7,12 @@ use yii\bootstrap5\Html;
 ?>
 <div class="barang-update">
 
-    <?= $this->render('_form', [
+    <?= ($isUpdateStock=='yes') ?  $this->render('_form_stock', [
         'model' => $model,
-    ]) ?>
+    ]) :
+        $this->render('_form', [
+            'model' => $model,
+        ])
+    ?>
 
 </div>

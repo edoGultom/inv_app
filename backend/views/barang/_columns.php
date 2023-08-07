@@ -50,17 +50,14 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
-        // jika button aksi berjajar ke bawah
-        'template' => '<div class="d-flex align-items-center justify-content-center flex-column" style="width:100px">{edit} {delete} {view} {detail}</div>',
+        'template' => '<div class="d-flex flex-row align-items-center justify-content-center gap-2">{edit} {delete} {view} {detail}</div>{stok_update}',
+        'contentOptions' => ['style' => 'text-align: left;'],
         'width' => '10%',
-        // jika button aksi berjajar ke samping
-        // 'template' => '{edit} {delete} {view} {detail}',
-        // 'width'=>'28%',
         'vAlign' => 'middle',
         'buttons' => [
             "edit" => function ($url, $model, $key) {
                 return Html::a('<i class="fas fa-edit" width="16" height="16" class="me-1 align-middle"></i>', ['update', 'id' => $model->id], [
-                    'class' => 'btn btn-warning btn-block',
+                    'class' => 'btn btn-warning',
                     'role' => 'modal-remote',
                     'title' => 'Edit',
                     'data-toggle' => 'tooltip'
@@ -68,7 +65,7 @@ return [
             },
             "delete" => function ($url, $model, $key) {
                 return Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i>', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-block mt-2',
+                    'class' => 'btn btn-danger',
                     'role' => 'modal-remote', 'title' => 'Hapus',
                     'data-confirm' => false, 'data-method' => false, // for overide yii data api
                     'data-request-method' => 'post',
@@ -81,39 +78,23 @@ return [
             },
             "view" => function ($url, $model, $key) {
                 return Html::a('<i class="fas fa-eye" width="16" height="16" class="me-1 align-middle"></i>', ['view', 'id' => $model->id], [
-                    'class' => 'btn btn-info btn-block mt-2',
+                    'class' => 'btn btn-info',
                     'role' => 'modal-remote',
                     'title' => 'Lihat',
                     'data-toggle' => 'tooltip'
                 ]);
             },
-            //"detail" => function ($url, $model, $key) {
-            //return Html::a('<i data-feather="more-vertical" width="16" height="16" class="me-1 align-middle"></i> Detail', ['view', 'id' => $model->id], [
-            //  'class' => 'btn btn-info btn-block mt-2',
-            //'role' => 'modal-remote',
-            //'title' => 'Lihat',
-            //'data-toggle' => 'tooltip'
-            //]);
-            //},
+            "stok_update" => function ($url, $model, $key) {
+                if ($model->isUpdateStock) { //jika barang sudah diusulkan/dipinjam maka akan muncul update/stok
+                    return Html::a('<span class="fas fa-file-pen" width="16" height="16" class="me-1 align-middle"></span> <i class=" tx-16"><u>Update Stok</u></i> ', ['update', 'id' => $model->id, 'isUpdateStock' => 'yes'], [
+                        'class' => 'tx-warning',
+                        'role' => 'modal-remote',
+                        'title' => 'Update Stok',
+                        'data-toggle' => 'tooltip'
+                    ]);
+                }
+            },
         ]
     ],
 
-    //[
-    //'class' => 'kartik\grid\ActionColumn',
-    //'dropdown' => false,
-    //'vAlign' => 'middle',
-    //'urlCreator' => function ($action, $model, $key, $index) {
-    //return Url::to([$action, 'id' => $key]);
-    //},
-    //'viewOptions' => ['role' => 'modal-remote', 'title' => 'Lihat', 'data-toggle' => 'tooltip'],
-    //'updateOptions' => ['role' => 'modal-remote', 'title' => 'Update', 'data-toggle' => 'tooltip'],
-    //'deleteOptions' => [
-    //'role' => 'modal-remote', 'title' => 'Hapus',
-    //'data-confirm' => false, 'data-method' => false, // for overide yii data api
-    //'data-request-method' => 'post',
-    //'data-toggle' => 'tooltip',
-    //'data-confirm-title' => 'Anda Yakin?',
-    //'data-confirm-message' => 'Apakah Anda yakin akan menghapus data ini?'
-    //],
-    //],
 ];

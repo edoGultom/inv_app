@@ -56,4 +56,26 @@ class TransaksiMasuk extends \yii\db\ActiveRecord
             'keterangan' => 'Keterangan',
         ];
     }
+    public function saveDetail($jumlah)
+    {
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = new DetailTransaksiMasuk();
+            $model->id_transaksi_masuk = $this->id;
+            $model->id_barang = $this->id_barang;
+            $model->jumlah = $jumlah;
+            if ($model->save()) {
+                $transaction->commit();
+                return true;
+            }else
+            return false;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
 }

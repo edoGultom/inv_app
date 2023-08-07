@@ -13,20 +13,8 @@ use kartik\select2\Select2;
 
 <div class="barang-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?php
-    echo $form->field($model, 'id_kategori')->widget(Select2::classname(), [
-        'data' => $model->dataKategori,
-        'pluginOptions' => [
-            'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-        ],
-        'options' => ['placeholder' => '-Pilih Kategori-', 'id' => 'id_kategori',],
-    ])->label('Kategori');
-    ?>
-    <?= $form->field($model, 'nama_barang')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'stok')->textInput(['disabled' => ($model->isUpdateStock) ? 'disabled' : false]) ?>
-
-    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+   
+    <?= $form->field($model, 'newStock')->textInput() ?>
 
     <?php if (!Yii::$app->request->isAjax) { ?>
         <div class="form-group">
