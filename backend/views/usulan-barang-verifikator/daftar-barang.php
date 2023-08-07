@@ -83,11 +83,11 @@ use yii\widgets\Pjax;
                 <table class="table table-dashboard mg-b-0">
                     <thead>
                         <tr>
-                            <th>DATE</th>
-                            <th class="text-right">KATEGORI</th>
-                            <th class="text-right">BARANG</th>
-                            <th class="text-right">KETERANGAN</th>
-                            <th style="text-align:center" class="text-right">AKSI</th>
+                            <th class="tx-color-03">DATE</th>
+                            <th class="text-right tx-color-03">KATEGORI</th>
+                            <th class="text-right tx-color-03">BARANG</th>
+                            <th class="text-right tx-color-03">KETERANGAN</th>
+                            <th style="text-align:center" class="text-right tx-color-03">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,7 +100,7 @@ use yii\widgets\Pjax;
                             $jlh = '<span class="' . $labelPermintaan . '">' . $value->jumlah . $text . '</span>';
                         ?>
                             <tr>
-                                <td class="tx-color-03 tx-normal"><?= Yii::$app->formatter->asDate($value->tanggal, 'php:d F Y')  ?></td>
+                                <td class="tx-color-03 tx-normal"><?= Yii::$app->formatter->asDate($value->tanggal, 'php:d/m/yy')  ?></td>
                                 <td class="tx-normal text-right"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
                                 <td class="tx-medium text-right"><?= $value->nama_barang ?></td>
                                 <td class="tx-medium text-right">
