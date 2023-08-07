@@ -11,7 +11,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'nama')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'username')->textInput() ?>
 
     <?= $form->field($model, 'email') ?>
 

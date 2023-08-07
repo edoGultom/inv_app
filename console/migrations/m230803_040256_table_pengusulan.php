@@ -56,6 +56,7 @@ class m230803_040256_table_pengusulan extends Migration
             'id' => $this->primaryKey(),
             'id_barang' => $this->integer(),
             'id_user' => $this->integer(),
+            'id_verifikator' => $this->integer(),
             'cepat_kode_unit' => $this->string(25),
             'nama_barang' => $this->text(),
             'jumlah' => $this->integer(),

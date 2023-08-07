@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/dashforge.css',
+        'css/dashforge.dashboard.css',
         'css/custom.css',
         'lib/remixicon/fonts/remixicon.css',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css',

@@ -84,6 +84,7 @@ use yii\widgets\Pjax;
                     <thead>
                         <tr>
                             <th class="tx-color-03">DATE</th>
+                            <th class="text-right tx-color-03">NAMA</th>
                             <th class="text-right tx-color-03">KATEGORI</th>
                             <th class="text-right tx-color-03">BARANG</th>
                             <th class="text-right tx-color-03">KETERANGAN</th>
@@ -101,6 +102,7 @@ use yii\widgets\Pjax;
                         ?>
                             <tr>
                                 <td class="tx-color-03 tx-normal"><?= Yii::$app->formatter->asDate($value->tanggal, 'php:d/m/yy')  ?></td>
+                                <td class="tx-color-03 tx-normal"><?= $value->user->nama ?? '-' ?></td>
                                 <td class="tx-normal text-right"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
                                 <td class="tx-medium text-right"><?= $value->nama_barang ?></td>
                                 <td class="tx-medium text-right">
@@ -123,7 +125,7 @@ use yii\widgets\Pjax;
                                             'class' => 'btn p-2',
                                             'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
                                         ]
-                                    ). Html::a(
+                                    ) . Html::a(
                                         '<i class="fa-2x fa-solid fa-check-to-slot wd-12 ht-12 stroke-wd-3 tx-warning"></i>',
                                         ['terima-bersyarat', 'id' => $value->id],
                                         [

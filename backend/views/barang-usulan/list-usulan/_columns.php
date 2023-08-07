@@ -31,18 +31,23 @@ return [
     [
         'class' => '\kartik\grid\EditableColumn',
         'width' => '10%',
+        'format' => 'raw',
         'label' => 'Jumlah Barang (Qty)',
         'attribute' => 'jumlah',
-        'editableOptions' => [
-            'name' => 'jumlah',
-            'asPopover' => false,
-            'disabled' => '$data->status > 0 ? true : false',
-            // 'format' => Editable::FORMAT_BUTTON,
-            'header' => 'jumlah_barang',
-            'size' => 'sm',
-            'options' => ['class' => 'form-control', 'name' => 'jumlah']
-        ],
-
+        'refreshGrid' => true,
+        'editableOptions' => function ($model, $key, $index, $column)  {
+            return [
+                'name' => 'jumlah',
+                'asPopover' => false,
+                'header' => 'jumlah_barang',
+                'size' => 'sm',
+                'options' => [
+                    'class' => 'form-control disabled',
+                    'disabled' =>$model->status > 0 ,
+                    'name' => 'jumlah'
+                ],
+            ];
+        },
     ],
 
     [
@@ -61,7 +66,7 @@ return [
                     <span style="margin-top:-10px">' . Yii::$app->formatter->asDate($model->tanggal, 'php:d F Y') . '</span>';
                     $label =  '<span class="text-muted mt-2">Status :</span> ' . $model->tahap;
                 }
-                if (empty($model->status)) {
+                if (empty($model->status) || $model->status == '99') {
                     $btn = '<div class="d-flex flex-column justify-content-center align-items-left">' . Html::a(
                         '<i class="fa-solid fa-square-arrow-up-right"></i> Kirim Usulan',
                         ['kirim-usulan', 'id' => $model->id],

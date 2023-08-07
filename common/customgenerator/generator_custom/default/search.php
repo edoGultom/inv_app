@@ -89,7 +89,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
         <?= implode("\n        ", $searchConditions) ?>
 
-        // $query->andFilterWhere(['ilike', '', $this->cari]);
+        // $query->andFilterWhere(['like', '', $this->cari]);
         return $dataProvider;
     }
 }

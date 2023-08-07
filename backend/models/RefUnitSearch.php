@@ -67,10 +67,10 @@ class RefUnitSearch extends RefUnit
 
         $query->andFilterWhere(['or',
             ['id' => $cari_angka],
-            ['ilike', 'nama_unit', $this->cari],
-            ['ilike', 'cepat_kode', $this->cari],
+            ['like', 'nama_unit', $this->cari],
+            ['like', 'cepat_kode', $this->cari],
         ]);
-        // $query->andFilterWhere(['ilike', '', $this->cari]);
+        // $query->andFilterWhere(['like', '', $this->cari]);
         return $dataProvider;
     }
 }

@@ -405,7 +405,7 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "['{$column}' => \$cari_angka],";
                     break;
                 default:
-                    $likeConditions[] = "['ilike', '{$column}', \$this->cari],";
+                    $likeConditions[] = "['like', '{$column}', \$this->cari],";
                     break;
             }
         }

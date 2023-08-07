@@ -67,9 +67,9 @@ class RefKategoriBarangSearch extends RefKategoriBarang
 
         $query->andFilterWhere(['or',
             ['id' => $cari_angka],
-            ['ilike', 'kategori', $this->cari],
+            ['like', 'kategori', $this->cari],
         ]);
-        // $query->andFilterWhere(['ilike', '', $this->cari]);
+        // $query->andFilterWhere(['like', '', $this->cari]);
         return $dataProvider;
     }
 }

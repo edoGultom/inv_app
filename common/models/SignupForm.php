@@ -17,6 +17,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $cepat_kode_unit;
+    public $nama;
     public $role;
 
 
@@ -42,7 +43,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
 
 
-            [['role','cepat_kode_unit'], 'safe'],
+            [['role','cepat_kode_unit','nama'], 'safe'],
             [['role','cepat_kode_unit'], 'required'],
         ];
     }
@@ -55,14 +56,13 @@ class SignupForm extends Model
     public function signup()
     {
 
-
-
         if (!$this->validate()) {
             return null;
         }
 
         $iduser = 0;
         $user = new User();
+        $user->nama = $this->nama;
         $user->username = $this->username;
         $user->email = $this->email;
         $user->cepat_kode_unit = $this->cepat_kode_unit;

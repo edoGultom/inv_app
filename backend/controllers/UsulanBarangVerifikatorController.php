@@ -61,8 +61,8 @@ class UsulanBarangVerifikatorController extends Controller
 
             $query->andWhere([
                 'or',
-                ['ilike', 'lower(nama_barang)', strtolower($searchModel->cari)],
-                ['ilike', 'lower(keterangan)', strtolower($searchModel->cari)],
+                ['like', 'lower(nama_barang)', strtolower($searchModel->cari)],
+                ['like', 'lower(keterangan)', strtolower($searchModel->cari)],
             ]);
         }
         $count = $query->count();
@@ -148,7 +148,8 @@ class UsulanBarangVerifikatorController extends Controller
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post())) {
-                if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_VERIFIKATOR, $model->keterangan)) {
+                $id_verifikator  = Yii::$app->user->identity->id ;
+                if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_VERIFIKATOR, $model->keterangan, $id_verifikator) ) {
                     return [
                         'forceReload' => '#verifikasi-usulan-pjax',
                         'size' => 'small',
@@ -190,7 +191,9 @@ class UsulanBarangVerifikatorController extends Controller
         $model->keterangan = NULL;
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN) && $model->saveTransaksiKeluar()) {
+            $id_verifikator  = Yii::$app->user->identity->id ;
+
+            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN,$id_verifikator) && $model->saveTransaksiKeluar()) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#verifikasi-usulan-pjax',

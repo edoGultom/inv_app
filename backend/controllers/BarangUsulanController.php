@@ -62,8 +62,8 @@ class BarangUsulanController extends Controller
 
             $query->where([
                 'or',
-                ['ilike', 'lower(nama_barang)', strtolower($searchModel->cari)],
-                ['ilike', 'lower(keterangan)', strtolower($searchModel->cari)],
+                ['like', 'lower(nama_barang)', strtolower($searchModel->cari)],
+                ['like', 'lower(keterangan)', strtolower($searchModel->cari)],
             ]);
         }
         $count = $query->count();
@@ -141,7 +141,7 @@ class BarangUsulanController extends Controller
                     'size' => "small",
                     'content' => '
                     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                        <img src="/img//img/success.gif" width="150" >
+                        <img src="/img/success.gif" width="150" >
                         <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil mengirim usulan</span>
                     </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -171,7 +171,7 @@ class BarangUsulanController extends Controller
                     'size' => "small",
                     'content' => '
                     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                        <img src="/img//img/success.gif" width="150" >
+                        <img src="/img/success.gif" width="150" >
                         <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil menerima data</span>
                     </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -206,7 +206,7 @@ class BarangUsulanController extends Controller
             //     'title' => "Tambah Ke Usulan",
             //     'content' => '
             //             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-            //                 <img src="/img//img/success.gif width="150"" >
+            //                 <img src="/img/success.gif width="150"" >
             //                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
             //             </div>',
             //     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -269,7 +269,7 @@ class BarangUsulanController extends Controller
                     'title' => "Tambah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif"  width="150" >
+                                <img src="/img/success.gif"  width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
@@ -331,7 +331,7 @@ class BarangUsulanController extends Controller
                     'title' => "Ubah Barang",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif"  width="150" >
+                                <img src="/img/success.gif"  width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Barang berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

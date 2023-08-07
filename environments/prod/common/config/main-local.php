@@ -3,10 +3,10 @@
 return [
     'components' => [
         'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'pgsql:host=localhost;port=5432;dbname=db_inventaris',
-            'username' => 'postgres',
-            'password' => 'psql123',
+            'class' => '\yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=db_inventaris',
+            'username' => 'root',
+            'password' => 'mdb124',
             'charset' => 'utf8',
         ],
         'mailer' => [

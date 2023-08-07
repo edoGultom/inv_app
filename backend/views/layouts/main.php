@@ -76,9 +76,9 @@ AppAsset::register($this);
         </div><!-- content-header -->
 
         <div class="content-body">
-            <!-- <div class="container pd-x-0"> -->
+            <div class="container pd-x-0">
             <?= $content ?>
-            <!-- </div> -->
+            </div>
         </div>
     </div>
 

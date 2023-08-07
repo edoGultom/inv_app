@@ -3,7 +3,6 @@
 namespace common\models;
 
 use yii\helpers\ArrayHelper;
-use common\components\UserBehavior;
 
 use Yii;
 
@@ -37,12 +36,7 @@ class Barang extends \yii\db\ActiveRecord
             [['nama_barang', 'keterangan'], 'string'],
         ];
     }
-    public function behaviors()
-    {
-        return [
-            UserBehavior::className(),
-        ];
-    }
+   
 
     /**
      * {@inheritdoc}

@@ -182,7 +182,7 @@ class PenggunaController extends Controller
                     'title' => "Ubah User",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif" width="150" >
+                                <img src="/img/success.gif" width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">User berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
@@ -234,7 +234,7 @@ class PenggunaController extends Controller
                 'title' => "Hapus User",
                 'content' => '
                         <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img//img/success.gif"  width="150" >
+                            <img src="/img/success.gif"  width="150" >
                             <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus User</span>
                         </div>',
                 'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

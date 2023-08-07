@@ -158,7 +158,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'title' => "Tambah <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?>",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif width="150"" >
+                                <img src="/img/success.gif width="150"" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;"><?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?> berhasil ditambahkan</span>
                             </div>',
                     'footer' => Html::button('Tutup',['class'=>'btn btn-secondary pull-left','data-bs-dismiss'=>"modal"]).
@@ -220,7 +220,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'title' => "Ubah <?= Inflector::camel2words(StringHelper::basename($generator->modelClass))?>",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img//img/success.gif width="150"" >
+                                <img src="/img/success.gif width="150"" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;"><?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?> berhasil diubah</span>
                             </div>',
                     'footer' => Html::button('Tutup',['class'=>'btn btn-secondary pull-left','data-bs-dismiss'=>"modal"])
@@ -271,7 +271,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'title' => "Hapus <?= Inflector::camel2words(StringHelper::basename($generator->modelClass))?>",
                 'content' => '
                         <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                            <img src="/img//img/success.gif width="150"" >
+                            <img src="/img/success.gif width="150"" >
                             <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil Menghapus <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?></span>
                         </div>',
                 'footer' => Html::button('Tutup',['class'=>'btn btn-secondary pull-left','data-bs-dismiss'=>"modal"])

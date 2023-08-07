@@ -41,7 +41,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     {
         return [
             [['id_barang', 'id_user', 'jumlah', 'status'], 'default', 'value' => null],
-            [['id_barang', 'id_user', 'jumlah', 'status'], 'integer'],
+            [['id_barang', 'id_user','id_verifikator', 'jumlah', 'status'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
             [['tanggal'], 'safe'],
             [['cepat_kode_unit'], 'string', 'max' => 25],
@@ -63,6 +63,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_barang' => 'Id Barang',
             'id_user' => 'Id User',
+            'id_verifikator' => 'Id Verifikator',
             'cepat_kode_unit' => 'Cepat Kode Unit',
             'nama_barang' => 'Nama Barang',
             'jumlah' => 'Jumlah',
@@ -71,10 +72,15 @@ class PengusulanBarang extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
-    public function setTahap($tahap, $keterangan = NULL)
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+    public function setTahap($tahap, $keterangan = NULL, $id_verifikator = NULL)
     {
         $this->status = $tahap;
         $this->keterangan = $keterangan;
+        $this->id_verifikator = $id_verifikator;
         if ($this->save()) {
             return true;
         }
@@ -99,7 +105,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
                 return '<span class="badge bg-success-light tx-success">' . $model->keterangan . '</span>';
             } else {
                 $status =  '<span class="badge bg-pink-light tx-pink">' . $model->keterangan . '</span>';
-                $alasan = '<span class="text-muted">Keterangan :</span> <span>' . $this->keterangan . '</span>';
+                $alasan = '<p class="text-muted">Keterangan : ' . $this->keterangan . '</p>';
                 return $status . $alasan;
             }
         }
