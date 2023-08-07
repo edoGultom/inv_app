@@ -46,7 +46,19 @@ $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
             'heading' => '<div class="d-flex justify-content-between align-items-center">
             <h5 class="m-0 text-dark title-index">List Barang Terpilih</h5></div>',
             'before' => false,
-            'after' => false,
+            // 'after' => false,
+            'after'=>BulkButtonWidget::widget([
+                'buttons'=>Html::a('<i class="fa-solid fa-envelopes-bulk"></i>&nbsp; Kirim Semua',
+                    ["sendall"] ,
+                    [
+                        "class"=>"btn btn-success",
+                        'role'=>'modal-remote-bulk',
+                        'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                        'data-request-method'=>'post',
+                        'data-confirm-title'=>'Aapakah anda yakin?',
+                        'data-confirm-message'=>'Apakah Anda yakin akan mengirim data ini?'
+                    ]),
+            ])
         ],
         'panelTemplate' => $this->render('panelTemplate', ['searchModel' => $searchModel]),
 

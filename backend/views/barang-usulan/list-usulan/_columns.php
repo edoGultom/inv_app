@@ -5,7 +5,17 @@ use yii\helpers\Url;
 use kartik\editable\Editable;
 
 return [
-
+//    [
+//        'class' => 'kartik\grid\CheckboxColumn',
+//        'width' => '2%',
+//     ],
+    [
+        'class' => 'kartik\grid\CheckboxColumn', 
+       'width' => '2%',
+       'checkboxOptions' => function($model) {
+              return ['value' => $model->id];
+          },
+    ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'header' => 'No',
@@ -19,7 +29,7 @@ return [
         'attribute' => 'id_barang',
         'value' => function ($model) {
             return '<p class="text-muted">Kategori Barang</p>
-            <p style="margin-top:-10px">' . ($model->barang->refKategori->kategori ?? '-') . '</p>
+            <p style="margin-top:-10px">' . ($model->barang->refKategori->label ?? '-') . '</p>
             <p class="text-muted">Nama Barang</p>
             <p style="margin-top:-10px">' . ($model->barang->nama_barang ?? '-') . '</p>';
         },

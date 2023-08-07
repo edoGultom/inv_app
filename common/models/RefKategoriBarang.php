@@ -46,4 +46,13 @@ class RefKategoriBarang extends \yii\db\ActiveRecord
             'id_kategori' => $this->id
         ])->count();
     }
+    public function getLabel()
+    {
+        if($this->id==1){
+            return '<span class="badge bg-indigo-light tx-indigo">'.$this->kategori.'</span>';
+        }
+        else{
+            return '<span class="badge bg-success-light tx-success">'.$this->kategori.'</span>';
+        }
+    }
 }

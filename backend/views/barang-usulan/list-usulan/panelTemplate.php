@@ -26,7 +26,6 @@ $appendBtn =  '<span class="ic-search"><i data-feather="search" width="16" heigh
                             ->label(false)
                         ?>
                     </div>
-
                 </div>
             </div>
             <div class="col-auto ms-auto">
@@ -44,11 +43,13 @@ $appendBtn =  '<span class="ic-search"><i data-feather="search" width="16" heigh
             </div>
         </div>
         <?php ActiveForm::end(); ?>
+        {panelAfter}
         {items}
     </div>
+    
+
 </div>
 <div class="d-flex justify-content-between px-4 py-3 align-items-center bg-footer">
     <div class="text-muted">{summary}</div>
     <div class="px-2">{pager}</div>
-</div>
 </div>

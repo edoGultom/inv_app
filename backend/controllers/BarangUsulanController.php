@@ -121,7 +121,39 @@ class BarangUsulanController extends Controller
             'dataProvider' => $dataProvider,
         ];
     }
+    public function actionSendall()
+    {
+        $request = Yii::$app->request;
+        $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        foreach ($pks as $pk) {
+            $model = PengusulanBarang::findOne(['id' => $pk, 'status' => NULL]);
+            if ($model) {
+                $model->tanggal = date('Y-m-d');
+                if (empty($model->jumlah)) {
+                    return [
+                        'title' => "Informasi",
+                        'size' => "small",
+                        'content' => '<div class="alert alert-danger">Maaf, Jumlah(Qty) tidak boleh kosong!</div>',
+                        'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                    ];
+                }
+                $model->setTahap(PengusulanBarang::KIRIM_USULAN);
+            }
+        }
 
+        if ($request->isAjax) {
+            /*
+            *   Process for ajax request
+            */
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-usulan-pjax'];
+        } else {
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+    }
     /**
      * Displays a single Barang model.
      * @param integer $id
