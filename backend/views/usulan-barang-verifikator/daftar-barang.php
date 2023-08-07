@@ -96,7 +96,7 @@ use yii\widgets\Pjax;
                         $no = 1;
                         foreach ($data as $key => $value) {
                             $labelPermintaan = ($value->checkStock < 1) ?  'text-danger' : 'tx-teal';
-                            $text = ($value->checkStock < 1) ? '<span class="tx-10"> (<i>Melebihi Stok</i>)</span>' : '';
+                            $text = ($value->checkStock < 1) ? '<span class="mg-l-5 tx-10 tx-normal tx-danger d-inline-flex align-items-center"><ion-icon name="arrow-up-outline" class="mg-b-3"></ion-icon>Melebihi Stok</span>' : '';
                             $jlh = '<span class="' . $labelPermintaan . '">' . $value->jumlah . $text . '</span>';
                         ?>
                             <tr>

@@ -38,13 +38,30 @@ if (Yii::$app->user->can('Verifikator')) {
                 'url' => "#",
                 'items' => [
                         [
-                                'label' => 'Data Barang',
+                                'label' => '<i class="fa-solid fa-toolbox"></i> Data Barang',
                                 'url' => ['/barang/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                           [
-                                'label' => 'Verifikasi Barang',
+                                'label' => '<i class="fa-solid fa-clipboard-check"></i> Verifikasi Barang',
                                 'url' => ['/usulan-barang-verifikator/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                ],
+        ];
+        $menuItems[] = [
+                'label' => '<i class="fa-solid fa-file-circle-check me-2"></i> <span>Laporan</span>',
+                'options' => ['class' => 'nav-item with-sub'],
+                'url' => "#",
+                'items' => [
+                        [
+                                'label' => '<i class="fa-solid fa-file-arrow-down"></i> Barang Masuk',
+                                'url' => ['/laporan-barang-masuk/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                          [
+                                'label' => '<i class="fa-solid fa-file-arrow-up"></i> Barang Keluar',
+                                'url' => ['/laporan-barang-keluar/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                 ],
