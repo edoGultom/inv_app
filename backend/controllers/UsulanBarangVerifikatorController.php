@@ -193,7 +193,7 @@ class UsulanBarangVerifikatorController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             $id_verifikator  = Yii::$app->user->identity->id ;
 
-            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN,$id_verifikator) && $model->saveTransaksiKeluar()) {
+            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN,NULL,$id_verifikator) && $model->saveTransaksiKeluar()) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#verifikasi-usulan-pjax',
@@ -209,7 +209,7 @@ class UsulanBarangVerifikatorController extends Controller
                 return [
                     'title' => "Informasi",
                     'size' => "small",
-                    'content' => '<div class="alert alert-danger">Gagal mengirim usulan</div>',
+                    'content' => '<div class="alert alert-danger">Gagal menerima usulan</div>',
                     'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
                 ];

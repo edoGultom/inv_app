@@ -122,7 +122,7 @@ use yii\widgets\Pjax;
                                             'data-confirm-title' => 'Konfirmasi',
                                             'data-confirm-ok' => 'Terima',
                                             'data-confirm-cancel' => 'Tutup',
-                                            'class' => 'btn p-2',
+                                            'class' => 'btn m-1',
                                             'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
                                         ]
                                     ) . Html::a(
@@ -131,7 +131,7 @@ use yii\widgets\Pjax;
                                         [
                                             'role' => 'modal-remote',
                                             'title' => 'Terima Bersyarat',
-                                            'class' => 'btn p-2',
+                                            'class' => 'btn m-1',
                                         ]
                                     ) . Html::a(
                                         '<i class="fa-2x fa-solid fa-square-xmark wd-12 ht-12 stroke-wd-3 text-danger"></i>',
@@ -139,7 +139,7 @@ use yii\widgets\Pjax;
                                         [
                                             'role' => 'modal-remote',
                                             'title' => 'Tolak',
-                                            'class' => 'btn p-2',
+                                            'class' => 'btn m-1',
                                         ]
                                     ); ?>
                             </tr>
