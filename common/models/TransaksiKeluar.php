@@ -39,7 +39,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
     {
         return [
             [['id_usulan', 'id_barang', 'id_user'], 'default', 'value' => null],
-            [['id_usulan', 'id_barang', 'id_user'], 'integer'],
+            [['id_usulan','id_peminjaman', 'id_barang', 'id_user'], 'integer'],
             [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
         ];
@@ -53,6 +53,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_usulan' => 'Id Usulan',
+            'id_peminjaman' => 'Id Peminjaman',
             'id_barang' => 'Id Barang',
             'id_user' => 'Id User',
             'tanggal' => 'Tanggal',

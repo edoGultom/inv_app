@@ -118,4 +118,53 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
     }
+    public function setNewStok($out)
+    {
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $barang = Barang::findOne(['id' => $this->id_barang]);
+            if (!$barang) {
+                return false;
+            }
+            $barang->stok -= $out;
+            if($barang->save()){
+                $transaction->commit();
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+    public function saveTransaksiKeluar()
+    {
+
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = new TransaksiKeluar();
+            $model->id_barang = $this->id_barang;
+            $model->id_peminjaman = $this->id;
+            $model->tanggal = date('Y-m-d');
+            $model->keterangan = $this->keterangan;
+
+            if ($model->save() && $this->setNewStok($this->jumlah) && $model->saveDetail($this->jumlah)) {
+                $transaction->commit();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
 }
