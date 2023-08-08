@@ -24,9 +24,10 @@ class m221008_100915_user_default extends Migration
                 'created_at',
                 'updated_at',
                 'nama',
+                'cepat_kode_unit'
             ],
             [
-                ['verifikator', 'g3DLJxWabCdhoSaSvxngMZQRaKCyGp-R', '$2y$10$ezLA5fcIaFDEbWi5axvKQekLW019TmVL1dgpoLPTtEGCNzX7bHPO6', null, 'verifikator@g.co.id', '10', time(), time(),'VERIFIKATOR'],
+                ['verifikator', 'g3DLJxWabCdhoSaSvxngMZQRaKCyGp-R', '$2y$10$ezLA5fcIaFDEbWi5axvKQekLW019TmVL1dgpoLPTtEGCNzX7bHPO6', null, 'verifikator@g.co.id', '10', time(), time(),'VERIFIKATOR','0207010000'],
             ]
         );
     }

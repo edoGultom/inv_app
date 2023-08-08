@@ -72,6 +72,15 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+    public function getCheckStock()
+    {
+        $stok = $this->barang->stok ?? 0;
+        return  $stok - $this->jumlah;
+    }
     public function setTahap($tahap, $keterangan = NULL, $id_verifikator = NULL)
     {
         $this->status = $tahap;

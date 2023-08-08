@@ -52,9 +52,21 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'url' => ['/barang/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
+                ],
+        ];
+        $menuItems[] = [
+                'label' => '<i class="fa-solid fa-toolbox me-2"></i> <span>Verifikasi</span>',
+                'options' => ['class' => 'nav-item with-sub'],
+                'url' => "#",
+                'items' => [
                         [
-                                'label' => '<i class="fa-solid fa-clipboard-check"></i> Verifikasi Barang',
+                                'label' => '<i class="fa-solid fa-file-circle-check"></i> Permintaan Barang',
                                 'url' => ['/usulan-barang-verifikator/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                        [
+                                'label' => '<i class="fa-solid fa-envelope-circle-check"></i> Peminjaman Aset',
+                                'url' => ['/usulan-aset-verifikator/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                 ],

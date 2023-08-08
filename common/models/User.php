@@ -170,7 +170,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
-
+    public function getUnit()
+    {
+        return $this->hasOne(RefUnit::className(), ['cepat_kode' => 'cepat_kode_unit']);
+    }
     /**
      * Generates password hash from password and sets it to the model
      *
