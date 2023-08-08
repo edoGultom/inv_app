@@ -42,11 +42,11 @@ $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
                 'type' => '',
                 'heading' => '<div class="d-flex justify-content-between align-items-center">
                                     <h5 class="m-0 text-dark title-index" style="text-transform:uppercase">Ref Kategori Barang</h5>' .
-                    Html::a(
-                        '<div class="d-flex align-items-center"><span class="align-middle"><i data-feather="plus-circle" class="me-1"></i></span> Tambah Kategori Barang</div>',
-                        ['create'],
-                        ['role' => 'modal-remote', 'title' => 'Tambah Kategori Barang', 'class' => 'btn btn-danger btn-sm']
-                    ) .
+                    // Html::a(
+                    //     '<div class="d-flex align-items-center"><span class="align-middle"><i data-feather="plus-circle" class="me-1"></i></span> Tambah Kategori Barang</div>',
+                    //     ['create'],
+                    //     ['role' => 'modal-remote', 'title' => 'Tambah Kategori Barang', 'class' => 'btn btn-danger btn-sm']
+                    // ) .
                     '</div>',
                 'before' => false,
                 'after' => false,

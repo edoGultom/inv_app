@@ -5,8 +5,8 @@ namespace backend\controllers;
 use backend\models\BarangSearch;
 use Yii;
 use common\models\Barang;
-use backend\models\BarangUsulanSearch;
-use common\models\PengusulanBarang;
+use backend\models\AsetUsulanSearch;
+use common\models\PeminjamanBarang;
 use common\models\RefKategoriBarang;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,7 +20,7 @@ use yii\filters\AccessControl;
 /**
  * BarangController implements the CRUD actions for Barang model.
  */
-class BarangUsulanController extends Controller
+class AsetUsulanController extends Controller
 {
     /**
      * @inheritdoc
@@ -57,41 +57,49 @@ class BarangUsulanController extends Controller
         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         // $model = $dataProvider->getModels(); $query = Artikel::find()->where(['aktif' => 1])->andWhere(['=', 'kategori', ($idKategori) ? $idKategori->id : '']);
 
-        $query = Barang::find()->where(['id_kategori' => 1]);
+        $query = Barang::find()->where(['id_kategori' => 2]);
         if ($searchModel->load(Yii::$app->request->queryParams)) {
-            $query
-                ->andWhere([
-                    'or',
-                    ['like', 'lower(nama_barang)', strtolower($searchModel->cari)],
-                    ['like', 'lower(keterangan)', strtolower($searchModel->cari)],
-                ]);
+
+            $query->andWhere([
+                'or',
+                ['like', 'lower(nama_barang)', strtolower($searchModel->cari)],
+                ['like', 'lower(keterangan)', strtolower($searchModel->cari)],
+            ]);
         }
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
         $data = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        $refKategori = RefKategoriBarang::find()->where(['id' => 1])->all();
+        $refKategori = RefKategoriBarang::find()->where(['id' => 2])->all();
 
         $request = Yii::$app->request;
         if ($request->isPost) {
             $data = (object) Yii::$app->request->post();
             $id = $data->editableKey;
+            $value = $data->PeminjamanBarang[0];
             // echo "<pre>";
-            // print_r($data);
+            // print_r($value);
             // echo "</pre>";
             // exit();
-            $model = PengusulanBarang::find()->where(['id' => $id])->one();
-            $stok = Barang::find()->where(['id' => $model->id_barang])->one()->stok;
+            $model = PeminjamanBarang::find()->where(['id' => $id])->one();
             $result = '';
-            if (isset($data->keterangan)) {
-                $model->keterangan = $data->keterangan;
-                $result = $data->keterangan;
+            // $tanggal_pinjam = NULL;
+            // $tanggal_kembali = NULL;
+            // if(isset($data['PeminjamanBarang'])){
+            //     $tanggal_pinjam = $data[0]['tanggal_pinjam'];
+            //     $tanggal_kembali = $data[0]['tanggal_kembali'];
+            // }
+            if (isset($value['tanggal_pinjam'])) {
+                $model->tanggal_pinjam = $value['tanggal_pinjam'];
+                $result = $value['tanggal_pinjam'];
+            }
+            if (isset($value['tanggal_kembali'])) {
+                $model->tanggal_kembali = $value['tanggal_kembali'];
+                $result = $value['tanggal_kembali'];
             }
             if (isset($data->jumlah)) {
-                // if($data->jumlah >= $stok){
-                //     return ['output' => $result, 'message' => ''];
-                // }
+                
                 $model->jumlah = $data->jumlah;;
                 $result = $data->jumlah;
             }
@@ -112,12 +120,12 @@ class BarangUsulanController extends Controller
     }
     public function actionIndexUsulan()
     {
-        $searchModel = new BarangUsulanSearch();
+        $searchModel = new AsetUsulanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query
-        ->innerJoinWith('barang')
-        ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
-        ->andFilterWhere(['id_kategori' => 1]);
+            ->innerJoinWith('barang')
+            ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
+            ->andFilterWhere(['id_kategori' => 2]);
         return [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -129,7 +137,7 @@ class BarangUsulanController extends Controller
         $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         Yii::$app->response->format = Response::FORMAT_JSON;
         foreach ($pks as $pk) {
-            $model = PengusulanBarang::findOne(['id' => $pk, 'status' => NULL]);
+            $model = PeminjamanBarang::findOne(['id' => $pk, 'status' => NULL]);
             if ($model) {
                 $model->tanggal = date('Y-m-d');
                 if (empty($model->jumlah)) {
@@ -140,7 +148,7 @@ class BarangUsulanController extends Controller
                         'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
                     ];
                 }
-                $model->setTahap(PengusulanBarang::KIRIM_USULAN);
+                $model->setTahap(PeminjamanBarang::KIRIM_USULAN);
             }
         }
 
@@ -164,11 +172,11 @@ class BarangUsulanController extends Controller
     public function actionKirimUsulan($id)
     {
         $request = Yii::$app->request;
-        $model = PengusulanBarang::find()->where(['id' => $id])->one();
+        $model = PeminjamanBarang::find()->where(['id' => $id])->one();
         $model->tanggal = date('Y-m-d');
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::KIRIM_USULAN)) {
+            if ($model->setTahap(PeminjamanBarang::KIRIM_USULAN)) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#crud-datatable-usulan-pjax',
@@ -194,11 +202,11 @@ class BarangUsulanController extends Controller
     public function actionTerima($id)
     {
         $request = Yii::$app->request;
-        $model = PengusulanBarang::find()->where(['id' => $id])->one();
+        $model = PeminjamanBarang::find()->where(['id' => $id])->one();
         $model->tanggal = date('Y-m-d');
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_ASN)) {
+            if ($model->setTahap(PeminjamanBarang::TERIMA_BERSYARAT_ASN)) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#crud-datatable-usulan-pjax',
@@ -227,7 +235,7 @@ class BarangUsulanController extends Controller
         // $barang = $this->findModel($id);
         $barang = Barang::findOne($id);
 
-        $model = new PengusulanBarang();
+        $model = new PeminjamanBarang();
         $model->id_barang = $id;
         $model->cepat_kode_unit = Yii::$app->user->identity->cepat_kode_unit;
         $model->nama_barang = $barang->nama_barang;
@@ -459,7 +467,7 @@ class BarangUsulanController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = PengusulanBarang::findOne($id)) !== null) {
+        if (($model = PeminjamanBarang::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

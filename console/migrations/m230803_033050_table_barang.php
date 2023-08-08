@@ -16,6 +16,16 @@ class m230803_033050_table_barang extends Migration
             'id' => $this->primaryKey(),
             'kategori' => $this->string(),
         ]);
+        $this->batchInsert(
+            'ref_kategori_barang',
+            [
+                'kategori'
+            ],
+            [
+                [ "Alat Tulis Kantor (ATK)"],
+                [ "Aset"],
+            ]
+        );
         $this->createTable('{{%barang}}', [
             'id' => $this->primaryKey(),
             'id_kategori' => $this->integer(),

@@ -28,7 +28,7 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
         // jika button aksi berjajar ke bawah
-        'template' => '<div class="d-flex align-items-center justify-content-center flex-column" style="width:100px">{edit} {delete} {view} {detail}</div>',
+        'template' => '<div class="d-flex align-items-center justify-content-center flex-column" style="width:100px">{edit}  {view} {detail}</div>',
         'width'=>'10%',
         // jika button aksi berjajar ke samping
         // 'template' => '{edit} {delete} {view} {detail}',

@@ -21,13 +21,23 @@ $menuItems[] = [
 ];
 
 if (Yii::$app->user->can('ASN')) {
+
         $menuItems[] = [
-                'label' => '
-                <div class="d-flex flex-row justify-content-between align-items-center w-100">
-                        <span><i class="fas fa-toolbox me-2"></i>Barang</span>
-                </div>',
-                'options' => ['class' => 'nav-item'],
-                'url' => ['/barang-usulan/index']
+                'label' => '<i class="fa-solid fa-toolbox me-2"></i> <span>Barang</span>',
+                'options' => ['class' => 'nav-item with-sub'],
+                'url' => "#",
+                'items' => [
+                        [
+                                'label' => '<i class="fa-solid fa-hand-holding-hand"></i> Permintaan Barang',
+                                'url' => ['/barang-usulan/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                        [
+                                'label' => '<i class="fa-solid fa-handshake"></i> Peminjaman Aset',
+                                'url' => ['/aset-usulan/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                ],
         ];
 }
 if (Yii::$app->user->can('Verifikator')) {
@@ -42,7 +52,7 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'url' => ['/barang/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
-                          [
+                        [
                                 'label' => '<i class="fa-solid fa-clipboard-check"></i> Verifikasi Barang',
                                 'url' => ['/usulan-barang-verifikator/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
@@ -59,7 +69,7 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'url' => ['/laporan-barang-masuk/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
-                          [
+                        [
                                 'label' => '<i class="fa-solid fa-file-arrow-up"></i> Barang Keluar',
                                 'url' => ['/laporan-barang-keluar/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
