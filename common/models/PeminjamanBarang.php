@@ -43,7 +43,7 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
         return [
             [['id_barang', 'id_user', 'id_verifikator', 'jumlah', 'status'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
-            [['tanggal_pinjam', 'tanggal_kembali'], 'safe'],
+            [['tanggal_pinjam', 'tanggal_kembali','tanggal'], 'safe'],
             [['cepat_kode_unit'], 'string', 'max' => 25],
         ];
     }
@@ -71,6 +71,32 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
             'keterangan' => 'Keterangan',
             'status' => 'Status',
         ];
+    }
+    public function setTahap($tahap, $keterangan = NULL, $id_verifikator = NULL)
+    {
+        $this->status = $tahap;
+        $this->keterangan = $keterangan;
+        $this->id_verifikator = $id_verifikator;
+        if ($this->save()) {
+            return true;
+        }
+        return false;
+    }
+    public function getTahap()
+    {
+        $model = $this->hasOne(Refstatus::className(), ['id' => 'status'])->one();
+        if ($model) {
+            if ($this->status == 1) {
+                return '<span class="badge bg-primary-light tx-primary ">' . $model->keterangan . '</span>';
+            } else if ($this->status == 2) {
+                return '<span class="badge bg-success-light tx-success">' . $model->keterangan . '</span>';
+            } else {
+                $status =  '<span class="badge bg-pink-light tx-pink">' . $model->keterangan . '</span>';
+                $alasan = '<p class="text-muted">Keterangan : ' . $this->keterangan . '</p>';
+                return $status . $alasan;
+            }
+        }
+        return false;
     }
     public function getIsVerify()
     {

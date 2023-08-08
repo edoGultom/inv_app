@@ -22,6 +22,7 @@ class m230807_203349_add_table_peminjaman_aset extends Migration
             'jumlah' => $this->integer(),
             'tanggal_pinjam' => $this->date(),
             'tanggal_kembali' => $this->date(),
+            'tanggal' => $this->date(),
             'keterangan' => $this->text(),
             'status' => $this->tinyInteger(),
         ]);
