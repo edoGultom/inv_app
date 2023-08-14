@@ -1,5 +1,7 @@
 <?php
 
+use yii\bootstrap5\Html;
+
 $this->title = "Laporan Barang Keluar";
 ?>
 <div class="row row-xs">
@@ -11,7 +13,13 @@ $this->title = "Laporan Barang Keluar";
                     <p class="mg-b-0 tx-color-03"><?= Yii::$app->formatter->asDate(date('Y-m-d'), 'php:d F Y') ?></p>
                 </div>
                 <div class="mg-t-20 mg-sm-t-0">
-                    <button class="btn btn-white"><i class="fas fa-print" class="mg-r-5"></i> Print</button>
+                    <?= Html::a('<i class="fas fa-print" class="mg-r-5"></i> Print', ['cetak'], [
+                        'class' => 'btn btn-white',
+                        'data-pjax' => 0,
+                        'target' => '_blank',
+                        'title' => 'Print',
+                        'data-toggle' => 'tooltip'
+                    ]); ?>
                 </div>
             </div>
         </div><!-- container -->
