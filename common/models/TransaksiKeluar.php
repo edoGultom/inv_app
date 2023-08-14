@@ -83,4 +83,31 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
             throw $e;
         }
     }
+    public function getVerifikator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    public function getPengusul()
+    {
+        if (!empty($this->id_pengusulan)) {
+            $model =  $this->hasOne(PengusulanBarang::className(), ['id' => 'id_pengusulan'])->one();
+            return $model->user->nama ?? '-';
+        }
+        if (!empty($this->id_peminjaman)) {
+            $model =  $this->hasOne(PeminjamanBarang::className(), ['id' => 'id_peminjaman'])->one();
+            return $model->user->nama ?? '-';
+        }
+    }
+    public function getUnitPengusul()
+    {
+        if (!empty($this->id_pengusulan)) {
+            $model =  $this->hasOne(PengusulanBarang::className(), ['id' => 'id_pengusulan'])->one();
+            return $model->user->unit->nama_unit ?? '-';
+        }
+        if (!empty($this->id_peminjaman)) {
+            $model =  $this->hasOne(PeminjamanBarang::className(), ['id' => 'id_peminjaman'])->one();
+            return $model->user->unit->nama_unit ?? '-';
+        }
+    }
 }

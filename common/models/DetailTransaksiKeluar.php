@@ -45,4 +45,12 @@ class DetailTransaksiKeluar extends \yii\db\ActiveRecord
             'jumlah' => 'Jumlah',
         ];
     }
+    public function getBarang()
+    {
+        return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
+    }
+    public function getTransaksiKeluar()
+    {
+        return $this->hasOne(TransaksiKeluar::className(), ['id' => 'id_transaksi_keluar']);
+    }
 }

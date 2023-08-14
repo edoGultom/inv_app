@@ -8,7 +8,7 @@ $this->title = "Laporan Barang Keluar";
             <div class="d-sm-flex align-items-center justify-content-between">
                 <div>
                     <h4 class="mg-b-5"><?= $this->title ?></h4>
-                    <p class="mg-b-0 tx-color-03"><?=Yii::$app->formatter->asDate(date('Y-m-d'), 'php:d F Y')?></p>
+                    <p class="mg-b-0 tx-color-03"><?= Yii::$app->formatter->asDate(date('Y-m-d'), 'php:d F Y') ?></p>
                 </div>
                 <div class="mg-t-20 mg-sm-t-0">
                     <button class="btn btn-white"><i class="fas fa-print" class="mg-r-5"></i> Print</button>
@@ -19,16 +19,9 @@ $this->title = "Laporan Barang Keluar";
     <div class="content tx-13">
         <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
             <div class="row">
-                <div class="col-sm-6">
-                    <label class="tx-sans tx-uppercase tx-10 tx-medium tx-spacing-1 tx-color-03">Billed From</label>
-                    <h6 class="tx-15 mg-b-10">ThemePixels, Inc.</h6>
-                    <p class="mg-b-0">201 Something St., Something Town, YT 242, Country 6546</p>
-                    <p class="mg-b-0">Tel No: 324 445-4544</p>
-                    <p class="mg-b-0">Email: youremail@companyname.com</p>
-                </div><!-- col -->
-                <div class="col-sm-6 tx-right d-none d-md-block">
-                    <label class="tx-sans tx-uppercase tx-10 tx-medium tx-spacing-1 tx-color-03">Invoice Number</label>
-                    <h1 class="tx-normal tx-color-04 mg-b-10 tx-spacing--2">#DF032AZ00022</h1>
+                <div class="col-sm-12 tx-right d-none d-md-block">
+                    <label class="tx-sans tx-uppercase tx-10 tx-medium tx-spacing-1 tx-color-03">Provinsi Sumatera Utara</label>
+                    <h1 class="tx-normal tx-color-04 mg-b-10 tx-spacing--2">BADAN KEPEGAWAIAN (BAPEG)</h1>
                 </div><!-- col -->
             </div><!-- row -->
 
@@ -36,42 +29,34 @@ $this->title = "Laporan Barang Keluar";
                 <table class="table table-invoice bd-b">
                     <thead>
                         <tr>
-                            <th class="wd-20p">Type</th>
-                            <th class="wd-40p d-none d-sm-table-cell">Description</th>
-                            <th class="tx-center">QNTY</th>
-                            <th class="tx-right">Unit Price</th>
-                            <th class="tx-right">Amount</th>
+                            <th class="wd-20p">Kategori</th>
+                            <th class="wd-20p">Nama Pemohon</th>
+                            <th class="wd-40p d-none d-sm-table-cell">Deskripsi Barang</th>
+                            <th class="tx-center">Tanggal Keluar</th>
+                            <th class="tx-right">QNTY</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="tx-nowrap">Website Design</td>
-                            <td class="d-none d-sm-table-cell tx-color-03">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam...</td>
-                            <td class="tx-center">2</td>
-                            <td class="tx-right">$150.00</td>
-                            <td class="tx-right">$300.00</td>
-                        </tr>
-                        <tr>
-                            <td class="tx-nowrap">Firefox Plugin</td>
-                            <td class="d-none d-sm-table-cell tx-color-03">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque...</td>
-                            <td class="tx-center">1</td>
-                            <td class="tx-right">$1,200.00</td>
-                            <td class="tx-right">$1,200.00</td>
-                        </tr>
-                        <tr>
-                            <td class="tx-nowrap">iPhone App</td>
-                            <td class="d-none d-sm-table-cell tx-color-03">Et harum quidem rerum facilis est et expedita distinctio</td>
-                            <td class="tx-center">2</td>
-                            <td class="tx-right">$850.00</td>
-                            <td class="tx-right">$1,700.00</td>
-                        </tr>
-                        <tr>
-                            <td class="tx-nowrap">Android App</td>
-                            <td class="d-none d-sm-table-cell tx-color-03">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut</td>
-                            <td class="tx-center">3</td>
-                            <td class="tx-right">$850.00</td>
-                            <td class="tx-right">$2,550.00</td>
-                        </tr>
+                        <?php
+                        $total = 0;
+                        foreach ($modelBarangKeluar as $key => $value) {
+                            $nama = ucwords(strtolower($value->transaksiKeluar->pengusul)) ?? '-';
+                            $unit = ucwords(strtolower($value->transaksiKeluar->unitPengusul)) ?? '-';
+                            $barang = ucwords(strtolower($value->barang->nama_barang)) ?? '-';
+                            $total +=  $value->jumlah;
+                        ?>
+                            <tr>
+                                <td class="tx-nowrap"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
+                                <td class="tx-nowrap  tx-color-03"><?= $nama . '<br/>' . $unit ?></td>
+                                <td class="d-none d-sm-table-cell tx-color-03"><?= $barang ?></td>
+                                <td class="tx-center"><?= Yii::$app->formatter->asDate($value->transaksiKeluar->tanggal, 'php:d/m/Y') ?></td>
+                                <td class="tx-right"><?= $value->jumlah ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+
+
                     </tbody>
                 </table>
             </div>
@@ -97,7 +82,7 @@ $this->title = "Laporan Barang Keluar";
                         </li> -->
                         <li class="d-flex justify-content-between">
                             <strong>Total Barang</strong>
-                            <strong>$5,987.50</strong>
+                            <strong><?= $total ?></strong>
                         </li>
                     </ul>
                 </div><!-- col -->
