@@ -1,131 +1,115 @@
 <?php
+
+use common\models\PeminjamanBarang;
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
+
 $icon = '<i class="fas fa-solid fa-sort text-secondary"></i>';
 $div = '<div class="d-flex justify-content-between align-items-center">';
 
 return [
-
     [
         'class' => 'kartik\grid\SerialColumn',
         'header' => 'No',
-        'width' => '30px',
+        'width' => '2%',
     ],
 
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=> $div .  'Id Peminjaman Barang' . $icon . '</div>',
-        'attribute'=>'id_peminjaman_barang',
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Barang<i class="icofont icofont-sort-alt"></i>',
+        'width' => '20%',
+        'format' => 'raw',
+        'attribute' => 'id_barang',
+        'value' => function ($model) {
+            return '<p class="text-muted">Kategori Barang</p>
+            <p style="margin-top:-10px">' . ($model->peminjaman->barang->refKategori->label ?? '-') . '</p>
+            <p class="text-muted">Nama Barang</p>
+            <p style="margin-top:-10px">' . ($model->peminjaman->barang->nama_barang ?? '-') . '</p>';
+        },
         'vAlign' => 'middle',
         'encodeLabel' => false,
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=> $div .  'Jumlah' . $icon . '</div>',
-        'attribute'=>'jumlah',
-        'vAlign' => 'middle',
-        'encodeLabel' => false,
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=> $div .  'Tanggal Pinjam' . $icon . '</div>',
-        'attribute'=>'tanggal_pinjam',
-        'vAlign' => 'middle',
-        'encodeLabel' => false,
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=> $div .  'Tanggal Kembali' . $icon . '</div>',
-        'attribute'=>'tanggal_kembali',
-        'vAlign' => 'middle',
-        'encodeLabel' => false,
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=> $div .  'Terlambat' . $icon . '</div>',
-        'attribute'=>'terlambat',
-        'vAlign' => 'middle',
-        'encodeLabel' => false,
+        'class' => '\kartik\grid\DataColumn',
+        'width' => '5%',
+        'format' => 'raw',
+        'label' => 'Keterangan',
+        'attribute' => 'jumlah',
+        'value' => function ($model) {
+            $jumlah = $model->peminjaman->jumlah . ' ';
+            $jumlah .= ucwords($model->peminjaman->satuan->satuan) ?? '';
+
+            $qty =  '<p class="text-muted">Qty</p>
+            <p style="margin-top:-10px">' . $jumlah . '</p>';
+
+            $tglPinjam =  '<p class="text-muted">Tanggal Pinjam</p>
+            <p style="margin-top:-10px">' . Yii::$app->formatter->asDate($model->peminjaman->tanggal_pinjam, 'php:d/m/Y') . '</p>';
+
+            $tglKembali =  '<p class="text-muted">Tanggal Kembali</p>
+            <p style="margin-top:-10px">' . $model->peminjaman->infoPengembalian . '</p>';
+            return $qty . $tglPinjam . $tglKembali;
+        }
     ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'label' => 'jumlah_denda<i class="icofont icofont-sort-alt"></i>',
-        // 'attribute'=>'jumlah_denda',
-        // 'vAlign' => 'middle',
-        // 'encodeLabel' => false,
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'label' => 'jumlah_denda<i class="icofont icofont-sort-alt"></i>',
+    // 'attribute'=>'jumlah_denda',
+    // 'vAlign' => 'middle',
+    // 'encodeLabel' => false,
     // ],
 
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header' => '',
-        // jika button aksi berjajar ke bawah
-        'template' => '<div class="d-flex align-items-center justify-content-center  flex-column" style="width:100px">{edit} {delete} {view} {detail}</div>',
-        'width'=>'10%',
-        // jika button aksi berjajar ke samping
-        // 'template' => '{edit} {delete} {view} {detail}',
-        // 'width'=>'28%',
+        'header' => 'Aksi',
+        'template' => '<div class="d-flex align-items-center justify-content-center  flex-row">{verifikasi}</div>',
+        'width' => '5%',
         'vAlign' => 'middle',
         'buttons' => [
-            "edit" => function ($url, $model, $key) {
-                return Html::a('<i class="fas fa-edit" width="16" height="16" class="me-1 align-middle"></i>', ['update', 'id' => $model->id], [
-                    'class' => 'btn btn-warning btn-block',
-                    'role' => 'modal-remote',
-                    'title' => 'Edit',
-                    'data-toggle' => 'tooltip'
-                ]);
+            "verifikasi" => function ($url, $model, $key) {
+                if ($model->peminjaman->status == PeminjamanBarang::TERIMA_PENGEMBALIAN_VERIFIKATOR) {
+                    return Html::a(
+                        'Selesai',
+                        ['terima', 'id' => $model->id],
+                        [
+                            'role' => 'modal-remote',
+                            'title' => 'Terima',
+                            'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                            'data-request-method' => 'post',
+                            'data-toggle' => 'tooltip',
+                            'data-confirm-title' => 'Konfirmasi',
+                            'data-confirm-ok' => 'Terima',
+                            'data-confirm-cancel' => 'Tutup',
+                            'class' => 'btn btn-info',
+                            'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
+                        ]
+                    );
+                }
+                return Html::a(
+                    '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 tx-success"></i>',
+                    ['terima', 'id' => $model->id],
+                    [
+                        'role' => 'modal-remote',
+                        'title' => 'Terima',
+                        'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                        'data-request-method' => 'post',
+                        'data-toggle' => 'tooltip',
+                        'data-confirm-title' => 'Konfirmasi',
+                        'data-confirm-ok' => 'Terima',
+                        'data-confirm-cancel' => 'Tutup',
+                        'class' => 'btn',
+                        'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
+                    ]
+                ) . Html::a(
+                    '<i class="fa-2x fa-solid fa-square-xmark wd-12 ht-12 stroke-wd-3 text-danger"></i>',
+                    ['tolak', 'id' => $model->id_peminjaman_barang],
+                    [
+                        'role' => 'modal-remote',
+                        'title' => 'Tolak',
+                        'class' => 'btn',
+                    ]
+                );
             },
-            "delete" => function ($url, $model, $key) {
-                return Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i>', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger btn-block mt-2',
-                    'role' => 'modal-remote', 'title' => 'Hapus',
-                    'data-confirm' => false, 'data-method' => false, // for overide yii data api
-                    'data-request-method' => 'post',
-                    'data-toggle' => 'tooltip',
-                    'data-confirm-title' => 'Hapus Pengembalian Barang',
-                    'data-confirm-ok' => 'Yakin',
-                    'data-confirm-cancel' => 'Kembali',
-                    'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Pengembalian Barang ini?'
-                ]);
-            },
-            "view" => function ($url, $model, $key) {
-                return Html::a('<i class="fas fa-eye" width="16" height="16" class="me-1 align-middle"></i>', ['view', 'id' => $model->id], [
-                    'class' => 'btn btn-info btn-block mt-2',
-                    'role' => 'modal-remote',
-                    'title' => 'Lihat',
-                    'data-toggle' => 'tooltip'
-                ]);
-            },
-            //"detail" => function ($url, $model, $key) {
-                //return Html::a('<i class="fa-solid fa-ellipsis-vertical" width="16" height="16" class="me-1 align-middle"></i> Detail', ['view', 'id' => $model->id], [
-                    //  'class' => 'btn btn-info btn-block mt-2',
-                    //'role' => 'modal-remote',
-                    //'title' => 'Lihat',
-                    //'data-toggle' => 'tooltip'
-                    //]);
-            //},
         ]
     ],
 
-    //[
-        //'class' => 'kartik\grid\ActionColumn',
-        //'dropdown' => false,
-        //'vAlign' => 'middle',
-        //'urlCreator' => function ($action, $model, $key, $index) {
-            //return Url::to([$action, 'id' => $key]);
-        //},
-        //'viewOptions' => ['role' => 'modal-remote', 'title' => 'Lihat', 'data-toggle' => 'tooltip'],
-        //'updateOptions' => ['role' => 'modal-remote', 'title' => 'Update', 'data-toggle' => 'tooltip'],
-        //'deleteOptions' => [
-            //'role' => 'modal-remote', 'title' => 'Hapus',
-            //'data-confirm' => false, 'data-method' => false, // for overide yii data api
-            //'data-request-method' => 'post',
-            //'data-toggle' => 'tooltip',
-            //'data-confirm-title' => 'Anda Yakin?',
-            //'data-confirm-message' => 'Apakah Anda yakin akan menghapus data ini?'
-        //],
-    //],
 ];

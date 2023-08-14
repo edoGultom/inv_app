@@ -16,7 +16,7 @@ $this->title = "User";
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
-$this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
+// $this->registerJs("$('.modal-dialog').addClass('modal-dialog-centered')");
 ?>
 
 <div class="user-index">

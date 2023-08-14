@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\PeminjamanBarang;
+use common\models\PengembalianBarang;
 
 /**
- * AsetUsulanSearch represents the model behind the search form about `common\models\PeminjamanBarang`.
+ * AsetPengembalianSearch represents the model behind the search form about `common\models\PengembalianBarang`.
  */
-class AsetUsulanSearch extends PeminjamanBarang
+class AsetPengembalianSearch extends PengembalianBarang
 {
     public $cari;
     public $rowdata;
@@ -20,9 +20,9 @@ class AsetUsulanSearch extends PeminjamanBarang
     public function rules()
     {
         return [
-            [['id', 'id_barang', 'id_user', 'id_verifikator', 'jumlah'], 'integer'],
-            [['cepat_kode_unit', 'nama_barang', 'tanggal_pinjam', 'tanggal_kembali', 'keterangan', 'status'], 'safe'],
-            [['cari', 'rowdata'], 'safe'],
+            [['id', 'id_peminjaman_barang', 'jumlah', 'terlambat', 'jumlah_denda'], 'integer'],
+            [['tanggal_pinjam', 'tanggal_kembali'], 'safe'],
+            [['cari','rowdata'], 'safe'],
         ];
     }
 
@@ -45,7 +45,7 @@ class AsetUsulanSearch extends PeminjamanBarang
     public function search($params)
     {
         $this->load($params);
-        $query = PeminjamanBarang::find();
+        $query = PengembalianBarang::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -61,23 +61,19 @@ class AsetUsulanSearch extends PeminjamanBarang
             return $dataProvider;
         }
         $cari_angka = '';
-        if (is_numeric($this->cari)) {
+        if(is_numeric($this->cari)){
             $cari_angka = $this->cari;
         }
 
-        $query->andFilterWhere([
-            'or',
+        $query->andFilterWhere(['or',
             ['id' => $cari_angka],
-            ['id_barang' => $cari_angka],
-            ['id_user' => $cari_angka],
-            ['id_verifikator' => $cari_angka],
+            ['id_peminjaman_barang' => $cari_angka],
             ['jumlah' => $cari_angka],
             ['tanggal_pinjam' => $cari_angka],
             ['tanggal_kembali' => $cari_angka],
-            ['like', 'cepat_kode_unit', $this->cari],
-            ['like', 'barang.nama_barang', strtolower($this->cari)],
-            ['like', 'barang.keterangan', strtolower($this->cari)],
-            ['like', 'status', $this->cari],
+            ['terlambat' => $cari_angka],
+            ['jumlah_denda' => $cari_angka],
+            
         ]);
         // $query->andFilterWhere(['like', '', $this->cari]);
         return $dataProvider;

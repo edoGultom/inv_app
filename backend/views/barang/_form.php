@@ -23,6 +23,8 @@ use kartik\select2\Select2;
     ])->label('Kategori');
     ?>
     <?= $form->field($model, 'nama_barang')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'stok')->textInput(['disabled' => ($model->isUpdateStock) ? 'disabled' : false]) ?>
     <?php
     echo $form->field($model, 'id_satuan')->widget(Select2::classname(), [
         'data' => $model->dataSatuan,
@@ -32,8 +34,6 @@ use kartik\select2\Select2;
         'options' => ['placeholder' => '-Pilih Satuan-', 'id' => 'id_satuan',],
     ])->label('Satuan');
     ?>
-    <?= $form->field($model, 'stok')->textInput(['disabled' => ($model->isUpdateStock) ? 'disabled' : false]) ?>
-
     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
     <?php if (!Yii::$app->request->isAjax) { ?>

@@ -56,7 +56,7 @@ class UsulanBarangVerifikatorController extends Controller
         $searchModel = new BarangUsulanSearch();
 
         $query = PengusulanBarang::find()
-            ->where(['status' => 1]);
+            ->where(['status' => PengusulanBarang::KIRIM_USULAN]);
         if ($searchModel->load(Yii::$app->request->queryParams)) {
 
             $query->andWhere([
@@ -148,8 +148,8 @@ class UsulanBarangVerifikatorController extends Controller
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post())) {
-                $id_verifikator  = Yii::$app->user->identity->id ;
-                if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_VERIFIKATOR, $model->keterangan, $id_verifikator) ) {
+                $id_verifikator  = Yii::$app->user->identity->id;
+                if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_VERIFIKATOR, $model->keterangan, $id_verifikator)) {
                     return [
                         'forceReload' => '#verifikasi-usulan-pjax',
                         'size' => 'small',
@@ -191,9 +191,9 @@ class UsulanBarangVerifikatorController extends Controller
         $model->keterangan = NULL;
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $id_verifikator  = Yii::$app->user->identity->id ;
+            $id_verifikator  = Yii::$app->user->identity->id;
 
-            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN,NULL,$id_verifikator) && $model->saveTransaksiKeluar()) {
+            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN, NULL, $id_verifikator) && $model->saveTransaksiKeluar()) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#verifikasi-usulan-pjax',

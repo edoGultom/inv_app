@@ -34,6 +34,11 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
     const TERIMA_USULAN = 2;
     const TERIMA_BERSYARAT_VERIFIKATOR = 3;
     const TERIMA_BERSYARAT_ASN = 4;
+
+    const KIRIM_USULAN_PENGEMBALIAN = 5;
+    const TERIMA_PENGEMBALIAN_VERIFIKATOR = 6;
+    const SELESAI_PENGEMBALIAN_VERIFIKATOR = 7;
+
     const TOLAK_USULAN = 99;
 
     /**
@@ -116,9 +121,25 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
         }
         return false;
     }
+    public function getSatuan()
+    {
+        return $this->hasOne(RefSatuan::className(), ['id' => 'id_satuan']);
+    }
     public function getBarang()
     {
         return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
+    }
+    public function getInfoPengembalian()
+    {
+        if ($this->tanggal_kembali < date('Y-m-d')) {
+            $telatHari = Yii::$app->helper->calculate2Date($this->tanggal_kembali, date('Y-m-d'));
+            return '
+            <div class="d-flex d-lg-block d-xl-flex align-items-end">
+            <p class="tx-normal tx-rubik mg-b-0 mg-r-5 lh-1">' . Yii::$app->formatter->asDate($this->tanggal_kembali, 'php:d/m/Y') . '</p>
+            <p class="tx-11 tx-color-03 mg-b-0"><span class="tx-medium tx-danger d-inline-flex align-items-center"> Terlambat ' . $telatHari . ' hari </p>
+          </div>
+          ';
+        }
     }
     public function setNewStok($out)
     {
@@ -145,7 +166,6 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
     }
     public function saveTransaksiKeluar()
     {
-
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {

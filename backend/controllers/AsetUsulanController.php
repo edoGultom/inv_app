@@ -77,32 +77,37 @@ class AsetUsulanController extends Controller
         if ($request->isPost) {
             $data = (object) Yii::$app->request->post();
             $id = $data->editableKey;
-            $value = $data->PeminjamanBarang[0];
             // echo "<pre>";
-            // print_r($value);
+            // print_r($data);
             // echo "</pre>";
             // exit();
+
             $model = PeminjamanBarang::find()->where(['id' => $id])->one();
             $result = '';
+            if (isset($data->jumlah)) {
+                $model->jumlah = $data->jumlah;;
+                $result = $data->jumlah;
+            }
+
             // $tanggal_pinjam = NULL;
             // $tanggal_kembali = NULL;
             // if(isset($data['PeminjamanBarang'])){
             //     $tanggal_pinjam = $data[0]['tanggal_pinjam'];
             //     $tanggal_kembali = $data[0]['tanggal_kembali'];
             // }
-            if (isset($value['tanggal_pinjam'])) {
-                $model->tanggal_pinjam = $value['tanggal_pinjam'];
-                $result = $value['tanggal_pinjam'];
+            if (isset($data->PeminjamanBarang)) {
+                $value = $data->PeminjamanBarang[0];
+                if (isset($value['tanggal_pinjam'])) {
+                    $model->tanggal_pinjam = $value['tanggal_pinjam'];
+                    $result = $value['tanggal_pinjam'];
+                }
+                if (isset($value['tanggal_kembali'])) {
+                    $model->tanggal_kembali = $value['tanggal_kembali'];
+                    $result = $value['tanggal_kembali'];
+                }
             }
-            if (isset($value['tanggal_kembali'])) {
-                $model->tanggal_kembali = $value['tanggal_kembali'];
-                $result = $value['tanggal_kembali'];
-            }
-            if (isset($data->jumlah)) {
-                
-                $model->jumlah = $data->jumlah;;
-                $result = $data->jumlah;
-            }
+
+
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($model->save(false)) {
                 return ['output' => $result, 'message' => ''];
@@ -239,6 +244,7 @@ class AsetUsulanController extends Controller
         $model->id_barang = $id;
         $model->cepat_kode_unit = Yii::$app->user->identity->cepat_kode_unit;
         $model->nama_barang = $barang->nama_barang;
+        $model->id_satuan = $barang->id_satuan;
         $model->save(false);
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;

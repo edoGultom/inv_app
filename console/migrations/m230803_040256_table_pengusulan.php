@@ -28,6 +28,9 @@ class m230803_040256_table_pengusulan extends Migration
                 [2, "Usulan Diterima"],
                 [3, "Terima Bersyarat Verifikator"],
                 [4, "Terima Bersyarat ASN"],
+                [5, "Usulan Pengembalian Aset ASN"],
+                [6, "Terima Pengembalian Aset Verifikator"],
+                [7, "Selesai Pengembalian Aset Verifikator"],
                 [99, "Usulan Ditolak"],
             ]
         );

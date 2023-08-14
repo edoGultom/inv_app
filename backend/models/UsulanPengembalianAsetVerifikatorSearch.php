@@ -67,11 +67,9 @@ class UsulanPengembalianAsetVerifikatorSearch extends PengembalianBarang
 
         $query->andFilterWhere([
             'or',
-            ['id' => $cari_angka],
-            ['id_peminjaman_barang' => $cari_angka],
-            ['jumlah' => $cari_angka],
-            ['tanggal_pinjam' => $cari_angka],
-            ['tanggal_kembali' => $cari_angka],
+            ['peminjaman_barang.jumlah' => $cari_angka],
+            ['peminjaman_barang.tanggal_pinjam' => $cari_angka],
+            ['peminjaman_barang.tanggal_kembali' => $cari_angka],
             ['terlambat' => $cari_angka],
             ['jumlah_denda' => $cari_angka],
 

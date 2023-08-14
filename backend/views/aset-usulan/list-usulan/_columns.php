@@ -65,7 +65,7 @@ return [
         'format' => 'raw',
         'label' => 'Tanggal Pinjam',
         'attribute' => 'tanggal_pinjam',
-        'value'=>function($model){
+        'value' => function ($model) {
             return  Yii::$app->formatter->asDate($model->tanggal_pinjam, 'php:d/m/Y');
         },
         'refreshGrid' => true,
@@ -91,8 +91,8 @@ return [
         'format' => 'raw',
         'label' => 'Tanggal Kembali',
         'attribute' => 'tanggal_kembali',
-        'value'=>function($model){
-            return  Yii::$app->formatter->asDate($model->tanggal_pinjam, 'php:d/m/Y');
+        'value' => function ($model) {
+            return  Yii::$app->formatter->asDate($model->tanggal_kembali, 'php:d/m/Y');
         },
         'refreshGrid' => true,
         'editableOptions' => function ($model, $key, $index, $column) {
@@ -130,7 +130,7 @@ return [
                     $label =  '<span class="text-muted mt-2">Status :</span> ' . $model->tahap;
                 }
                 if (empty($model->status) || $model->status == '99') {
-                    $btn = '<div class="d-flex flex-column justify-content-center align-items-left">' . Html::a(
+                    $btnKirimUsulan = ($model->jumlah > 0) ? Html::a(
                         '<i class="fa-solid fa-square-arrow-up-right"></i> Kirim Usulan',
                         ['kirim-usulan', 'id' => $model->id],
                         [
@@ -142,17 +142,19 @@ return [
                             'data-confirm-message' => 'Apakah Anda Yakin Ingin Menambah Data ini ???',
                             'class' => 'my-2 btn btn-success d-block',
                         ]
-                    ) . Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i> Hapus List', ['delete', 'id' => $model->id], [
-                        'class' => 'btn btn-danger d-block',
-                        'role' => 'modal-remote', 'title' => 'Hapus List',
-                        'data-confirm' => false, 'data-method' => false, // for overide yii data api
-                        'data-request-method' => 'post',
-                        'data-toggle' => 'tooltip',
-                        'data-confirm-title' => 'Hapus List',
-                        'data-confirm-ok' => 'Yakin',
-                        'data-confirm-cancel' => 'Kembali',
-                        'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
-                    ]) . '</div>';
+                    )  : NULL;
+                    $btn = '<div class="d-flex flex-column justify-content-center align-items-left">' .
+                        $btnKirimUsulan . Html::a('<i class="fas fa-trash" width="16" height="16" class="me-1 align-middle"></i> Hapus List', ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger d-block',
+                            'role' => 'modal-remote', 'title' => 'Hapus List',
+                            'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                            'data-request-method' => 'post',
+                            'data-toggle' => 'tooltip',
+                            'data-confirm-title' => 'Hapus List',
+                            'data-confirm-ok' => 'Yakin',
+                            'data-confirm-cancel' => 'Kembali',
+                            'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
+                        ]) . '</div>';
                 }
                 return $tanggal . '<br/>' . $label . '<br/>' . $btn;
             },

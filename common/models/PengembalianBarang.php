@@ -20,6 +20,7 @@ class PengembalianBarang extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
     public static function tableName()
     {
         return 'pengembalian_barang';
@@ -50,5 +51,13 @@ class PengembalianBarang extends \yii\db\ActiveRecord
             'terlambat' => 'Terlambat',
             'jumlah_denda' => 'Jumlah Denda',
         ];
+    }
+    public function getBarang()
+    {
+        return $this->hasOne(Barang::className(), ['id' => 'id_barang']);
+    }
+    public function getPeminjaman()
+    {
+        return $this->hasOne(PeminjamanBarang::className(), ['id' => 'id_peminjaman_barang']);
     }
 }

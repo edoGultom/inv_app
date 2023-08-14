@@ -37,6 +37,11 @@ if (Yii::$app->user->can('ASN')) {
                                 'url' => ['/aset-usulan/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
+                        [
+                                'label' => '<i class="fa-solid fa-handshake"></i> Pengembalian Aset',
+                                'url' => ['/aset-pengembalian/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
                 ],
         ];
 }
@@ -100,17 +105,17 @@ if (Yii::$app->user->can('Verifikator')) {
                 'url' => "#",
                 'items' => [
                         [
-                                'label' => 'Referensi Barang',
+                                'label' => 'Kategori Barang',
                                 'url' => ['/ref-kategori-barang/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                         [
-                                'label' => 'Referensi Unit',
+                                'label' => 'Unit',
                                 'url' => ['/ref-unit/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                         [
-                                'label' => 'Referensi Satuan',
+                                'label' => 'Satuan',
                                 'url' => ['/ref-satuan/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],

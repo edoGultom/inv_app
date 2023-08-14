@@ -8,20 +8,13 @@ use Yii;
 class Helper extends Component
 {
 
-    //convert dd-mm-yyyy to yyyy-mm-dd
-    public function konversiDate($date)
+    public function calculate2Date($date1, $date2)
     {
-        $date = preg_replace('/\s+/', '', $date);
-        if (preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/", $date)) {
-            $pis = explode("-", $date);
-            $tgl = $pis[0];
-            $bln = $pis[1];
-            $thn = $pis[2];
-            $new_data = $thn . "-" . $bln . "-" . $tgl;
-            $konversiDate = date($new_data);
-            return $konversiDate;
-        }
-        return $date;
+        $date1 = strtotime($date1);
+        $date2 = strtotime($date2);
+        $diff = $date2 - $date1;
+        $days = floor($diff / (60 * 60 * 24));
+        return $days;
     }
 
     public function getTrimCepatKodeV2($cepatkode)

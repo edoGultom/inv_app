@@ -73,4 +73,3 @@ $appendBtn =  '<span class="ic-search"><i class="fas fa-search" width="16" heigh
     <div class="text-muted">{summary}</div>
     <div class="px-2">{pager}</div>
 </div>
-</div>
