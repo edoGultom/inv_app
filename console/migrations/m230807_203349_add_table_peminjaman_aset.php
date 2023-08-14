@@ -15,6 +15,7 @@ class m230807_203349_add_table_peminjaman_aset extends Migration
         $this->createTable('{{%peminjaman_barang}}', [
             'id' => $this->primaryKey(),
             'id_barang' => $this->integer(),
+            'id_satuan' => $this->integer(),
             'id_user' => $this->integer(),
             'id_verifikator' => $this->integer(),
             'cepat_kode_unit' => $this->string(25),

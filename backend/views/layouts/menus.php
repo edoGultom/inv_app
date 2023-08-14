@@ -69,6 +69,11 @@ if (Yii::$app->user->can('Verifikator')) {
                                 'url' => ['/usulan-aset-verifikator/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
+                        [
+                                'label' => '<i class="fa-solid fa-business-time"></i> Pengembalian Aset',
+                                'url' => ['/usulan-pengembalian-aset-verifikator/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
                 ],
         ];
         $menuItems[] = [
@@ -102,6 +107,11 @@ if (Yii::$app->user->can('Verifikator')) {
                         [
                                 'label' => 'Referensi Unit',
                                 'url' => ['/ref-unit/index'],
+                                'template' => '<a href="{url}" >{label}</a>',
+                        ],
+                        [
+                                'label' => 'Referensi Satuan',
+                                'url' => ['/ref-satuan/index'],
                                 'template' => '<a href="{url}" >{label}</a>',
                         ],
                 ],

@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+
 use common\components\UserBehavior;
 
 use Yii;
@@ -41,9 +42,9 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_barang', 'id_user', 'id_verifikator', 'jumlah', 'status'], 'integer'],
+            [['id_barang', 'id_user', 'id_verifikator', 'jumlah', 'status', 'id_satuan'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
-            [['tanggal_pinjam', 'tanggal_kembali','tanggal'], 'safe'],
+            [['tanggal_pinjam', 'tanggal_kembali', 'tanggal'], 'safe'],
             [['cepat_kode_unit'], 'string', 'max' => 25],
         ];
     }
@@ -61,6 +62,7 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_barang' => 'Id Barang',
+            'id_satuan' => 'Id Satuan',
             'id_user' => 'Id User',
             'id_verifikator' => 'Id Verifikator',
             'cepat_kode_unit' => 'Cepat Kode Unit',
@@ -128,7 +130,7 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
                 return false;
             }
             $barang->stok -= $out;
-            if($barang->save()){
+            if ($barang->save()) {
                 $transaction->commit();
                 return true;
             }

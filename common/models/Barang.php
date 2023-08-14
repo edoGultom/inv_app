@@ -33,13 +33,13 @@ class Barang extends \yii\db\ActiveRecord
     {
         return [
             [['id_kategori', 'stok'], 'default', 'value' => null],
-            [['id_kategori', 'stok'], 'integer'],
+            [['id_kategori', 'id_satuan', 'stok'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
             ['newStock', 'safe'],
 
         ];
     }
-   
+
 
     /**
      * {@inheritdoc}
@@ -49,6 +49,7 @@ class Barang extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_kategori' => 'Id Kategori',
+            'id_satuan' => 'Id Satuan',
             'nama_barang' => 'Nama Barang',
             'stok' => 'Stok',
             'keterangan' => 'Keterangan',
@@ -58,6 +59,10 @@ class Barang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RefKategoriBarang::className(), ['id' => 'id_kategori']);
     }
+    public function getRefSatuan()
+    {
+        return $this->hasOne(RefSatuan::className(), ['id' => 'id_satuan']);
+    }
     public function getIsUsulan()
     {
         return $this->hasOne(PengusulanBarang::className(), ['id_barang' => 'id'])->exists();
@@ -66,10 +71,14 @@ class Barang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(TransaksiKeluar::className(), ['id_barang' => 'id'])->exists();
     }
-    
+
     public function getDataKategori()
     {
         return ArrayHelper::map(RefKategoriBarang::find()->all(), 'id', 'kategori');
+    }
+    public function getDataSatuan()
+    {
+        return ArrayHelper::map(RefSatuan::find()->all(), 'id', 'satuan');
     }
     public function setNewStok($in)
     {
@@ -81,7 +90,7 @@ class Barang extends \yii\db\ActiveRecord
                 return false;
             }
             $barang->stok += $in;
-            if($barang->save()){
+            if ($barang->save()) {
                 $transaction->commit();
                 return true;
             }

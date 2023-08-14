@@ -22,13 +22,14 @@ class m230803_033050_table_barang extends Migration
                 'kategori'
             ],
             [
-                [ "Alat Tulis Kantor (ATK)"],
-                [ "Aset"],
+                ["Alat Tulis Kantor (ATK)"],
+                ["Aset"],
             ]
         );
         $this->createTable('{{%barang}}', [
             'id' => $this->primaryKey(),
             'id_kategori' => $this->integer(),
+            'id_satuan' => $this->integer(),
             'nama_barang' => $this->text(),
             'stok' => $this->integer(),
             'keterangan' => $this->text(),

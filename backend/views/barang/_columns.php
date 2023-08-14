@@ -36,6 +36,10 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'label' => $div .  'Stok' . $icon . '</div>',
         'attribute' => 'stok',
+        'value' => function ($model) {
+            $stok = $model->stok;
+            return $stok . ' ' . ucwords($model->refSatuan->satuan) ?? '-';
+        },
         'vAlign' => 'middle',
         'encodeLabel' => false,
     ],
