@@ -89,9 +89,6 @@ class BarangUsulanController extends Controller
                 $result = $data->keterangan;
             }
             if (isset($data->jumlah)) {
-                // if($data->jumlah >= $stok){
-                //     return ['output' => $result, 'message' => ''];
-                // }
                 $model->jumlah = $data->jumlah;;
                 $result = $data->jumlah;
             }
@@ -115,9 +112,9 @@ class BarangUsulanController extends Controller
         $searchModel = new BarangUsulanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query
-        ->innerJoinWith('barang')
-        ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
-        ->andFilterWhere(['id_kategori' => 1]);
+            ->innerJoinWith('barang')
+            ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
+            ->andFilterWhere(['id_kategori' => 1]);
         return [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

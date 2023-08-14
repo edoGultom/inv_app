@@ -41,7 +41,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
     {
         return [
             [['id_barang', 'id_user', 'jumlah', 'status'], 'default', 'value' => null],
-            [['id_barang', 'id_user','id_verifikator', 'jumlah', 'status'], 'integer'],
+            [['id_barang', 'id_user', 'id_verifikator', 'jumlah', 'status'], 'integer'],
             [['nama_barang', 'keterangan'], 'string'],
             [['tanggal'], 'safe'],
             [['cepat_kode_unit'], 'string', 'max' => 25],
@@ -128,7 +128,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
                 return false;
             }
             $barang->stok -= $out;
-            if($barang->save()){
+            if ($barang->save()) {
                 $transaction->commit();
                 return true;
             }
@@ -149,7 +149,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
         try {
             $model = new TransaksiKeluar();
             $model->id_barang = $this->id_barang;
-            $model->id_usulan = $this->id;
+            $model->id_pengusulan = $this->id;
             $model->tanggal = date('Y-m-d');
             $model->keterangan = $this->keterangan;
 

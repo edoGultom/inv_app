@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\PengembalianBarang;
 use backend\models\UsulanPengembalianAsetVerifikatorSearch;
+use common\models\Barang;
 use common\models\PeminjamanBarang;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -128,17 +129,27 @@ class UsulanPengembalianAsetVerifikatorController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             $id_verifikator  = Yii::$app->user->identity->id;
 
-            if ($model->setTahap(PeminjamanBarang::TERIMA_PENGEMBALIAN_VERIFIKATOR, NULL, $id_verifikator) && $model->saveTransaksiKeluar()) {
+            if ($model->setTahap(PeminjamanBarang::TERIMA_PENGEMBALIAN_VERIFIKATOR, NULL, $id_verifikator)) {
+                $barang = Barang::findOne(['id' => $model->id_barang]);
+                if ($barang && $model->saveTransaksiMasuk()) {
+                    return [
+                        'title' => "Informasi",
+                        'forceReload' => '#crud-datatable-pjax',
+                        'size' => "small",
+                        'content' => '
+                        <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                            <img src="/img/success.gif" width="150" >
+                            <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil memverifikasi pengembalian</span>
+                        </div>',
+                        'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                    ];
+                }
                 return [
                     'title' => "Informasi",
-                    'forceReload' => '#crud-datatable-pjax',
                     'size' => "small",
-                    'content' => '
-                    <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                        <img src="/img/success.gif" width="150" >
-                        <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil memverifikasi pengembalian</span>
-                    </div>',
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                    'content' => '<div class="alert alert-danger">Gagal memproses</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
                 ];
             } else {
                 return [

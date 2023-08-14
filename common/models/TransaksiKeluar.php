@@ -10,7 +10,7 @@ use Yii;
  * This is the model class for table "transaksi_keluar".
  *
  * @property int $id
- * @property int|null $id_usulan
+ * @property int|null $id_pengusulan
  * @property int|null $id_barang
  * @property int|null $id_user
  * @property string|null $tanggal
@@ -38,8 +38,8 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_usulan', 'id_barang', 'id_user'], 'default', 'value' => null],
-            [['id_usulan','id_peminjaman', 'id_barang', 'id_user'], 'integer'],
+            [['id_pengusulan', 'id_barang', 'id_user'], 'default', 'value' => null],
+            [['id_pengusulan', 'id_peminjaman', 'id_barang', 'id_user'], 'integer'],
             [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
         ];
@@ -52,7 +52,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_usulan' => 'Id Usulan',
+            'id_pengusulan' => 'Id Usulan',
             'id_peminjaman' => 'Id Peminjaman',
             'id_barang' => 'Id Barang',
             'id_user' => 'Id User',
@@ -73,8 +73,8 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
             if ($model->save()) {
                 $transaction->commit();
                 return true;
-            }else
-            return false;
+            } else
+                return false;
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;

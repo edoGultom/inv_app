@@ -52,11 +52,7 @@ class AsetUsulanController extends Controller
      */
     public function actionIndex()
     {
-        // echo   Yii::$app->user->identity->id;die();
         $searchModel = new BarangSearch();
-        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // $model = $dataProvider->getModels(); $query = Artikel::find()->where(['aktif' => 1])->andWhere(['=', 'kategori', ($idKategori) ? $idKategori->id : '']);
-
         $query = Barang::find()->where(['id_kategori' => 2]);
         if ($searchModel->load(Yii::$app->request->queryParams)) {
 
@@ -75,6 +71,7 @@ class AsetUsulanController extends Controller
 
         $request = Yii::$app->request;
         if ($request->isPost) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $data = (object) Yii::$app->request->post();
             $id = $data->editableKey;
             // echo "<pre>";
@@ -102,13 +99,15 @@ class AsetUsulanController extends Controller
                     $result = $value['tanggal_pinjam'];
                 }
                 if (isset($value['tanggal_kembali'])) {
+                    if ($value['tanggal_kembali'] < $model->tanggal_pinjam) {
+                        return ['output' => $model->tanggal_kembali, 'message' => 'Harus lebih besar'];
+                    }
                     $model->tanggal_kembali = $value['tanggal_kembali'];
                     $result = $value['tanggal_kembali'];
                 }
             }
 
 
-            Yii::$app->response->format = Response::FORMAT_JSON;
             if ($model->save(false)) {
                 return ['output' => $result, 'message' => ''];
             } else {

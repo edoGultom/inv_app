@@ -14,7 +14,7 @@ class m230803_040344_transaksi_keluar extends Migration
     {
         $this->createTable('{{%transaksi_keluar}}', [
             'id' => $this->primaryKey(),
-            'id_usulan' => $this->integer(),
+            'id_pengusulan' => $this->integer(),
             'id_peminjaman' => $this->integer()->defaultValue(NULL),
             'id_barang' => $this->integer(),
             'id_user' => $this->integer(),
