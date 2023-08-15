@@ -96,7 +96,8 @@ class UsulanBarangVerifikatorController extends Controller
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post())) {
-                if ($model->setTahap(PengusulanBarang::TOLAK_USULAN, $model->keterangan)) {
+                $id_verifikator  = Yii::$app->user->identity->id;
+                if ($model->setTahap(PengusulanBarang::TOLAK_USULAN, $model->keterangan, $id_verifikator)) {
                     return [
                         'forceReload' => '#verifikasi-usulan-pjax',
                         'size' => 'small',
@@ -125,10 +126,6 @@ class UsulanBarangVerifikatorController extends Controller
                         Html::a('Simpan', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
                 ];
             }
-        } else {
-            return $this->render('_form_tolak', [
-                'model' => $this->findModel($id),
-            ]);
         }
     }
     public function actionTerimaBersyarat($id)
