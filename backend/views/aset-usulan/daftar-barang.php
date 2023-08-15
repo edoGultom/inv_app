@@ -48,7 +48,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
         </div><!-- card-header -->
         <div class="card-body pd-y-30">
-            <div class="d-sm-flex gap-3">
+            <div class="d-sm-flex gap-3 flex-wrap">
                 <?php
                 foreach ($refKategori as $key => $value) {
                 ?>
@@ -107,7 +107,7 @@ use yii\bootstrap5\ActiveForm;
                                         'data-confirm-title' => 'Tambah',
                                         'data-confirm-ok' => 'Yakin',
                                         'data-confirm-cancel' => 'Kembali',
-                                        'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
+                                        'data-confirm-message' => 'Apakah kamu yakin ingin menambah Barang ini?'
                                     ]) ?>
                             </tr>
                         <?php

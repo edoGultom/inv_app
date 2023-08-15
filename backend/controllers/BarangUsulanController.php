@@ -195,7 +195,7 @@ class BarangUsulanController extends Controller
         $model->tanggal = date('Y-m-d');
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_ASN)) {
+            if ($model->setTahap(PengusulanBarang::TERIMA_USULAN, NULL) && $model->saveTransaksiKeluar()) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#crud-datatable-usulan-pjax',

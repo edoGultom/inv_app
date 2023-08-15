@@ -74,10 +74,7 @@ class AsetUsulanController extends Controller
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $data = (object) Yii::$app->request->post();
             $id = $data->editableKey;
-            // echo "<pre>";
-            // print_r($data);
-            // echo "</pre>";
-            // exit();
+
 
             $model = PeminjamanBarang::find()->where(['id' => $id])->one();
             $result = '';
@@ -87,17 +84,25 @@ class AsetUsulanController extends Controller
             }
 
             if (isset($data->PeminjamanBarang)) {
-                $value = $data->PeminjamanBarang[0];
-                if (isset($value['tanggal_pinjam'])) {
-                    $model->tanggal_pinjam = $value['tanggal_pinjam'];
-                    $result = $value['tanggal_pinjam'];
+                // echo "<pre>";
+                // print_r(array_column($data->PeminjamanBarang, 'tanggal_pinjam'));
+                // echo "</pre>";
+                // exit();
+                // $value = $data->PeminjamanBarang[0];
+                if (isset(array_column($data->PeminjamanBarang, 'tanggal_pinjam')[0])) {
+                    $model->tanggal_pinjam = array_column($data->PeminjamanBarang, 'tanggal_pinjam')[0];
+                    $result = array_column($data->PeminjamanBarang, 'tanggal_pinjam')[0];
                 }
-                if (isset($value['tanggal_kembali'])) {
-                    if ($value['tanggal_kembali'] < $model->tanggal_pinjam) {
+                // echo "<pre>";
+                // print_r($result);
+                // echo "</pre>";
+                // exit();
+                if (isset(array_column($data->PeminjamanBarang, 'tanggal_kembali')[0])) {
+                    if (array_column($data->PeminjamanBarang, 'tanggal_kembali')[0] < $model->tanggal_pinjam) {
                         return ['output' => $model->tanggal_kembali, 'message' => 'Harus lebih besar'];
                     }
-                    $model->tanggal_kembali = $value['tanggal_kembali'];
-                    $result = $value['tanggal_kembali'];
+                    $model->tanggal_kembali = array_column($data->PeminjamanBarang, 'tanggal_kembali')[0];
+                    $result = array_column($data->PeminjamanBarang, 'tanggal_kembali')[0];
                 }
             }
 
@@ -123,8 +128,9 @@ class AsetUsulanController extends Controller
         $dataProvider->query
             ->innerJoinWith('barang')
             ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
-            ->andFilterWhere(['id_kategori' => 2]) //kategori 'asset'
-            ->andFilterWhere(['<', 'status', PeminjamanBarang::TERIMA_USULAN]); //kategori 'asset'
+            // ->andFilterWhere(['id_kategori' => 2]) //kategori 'asset'
+            ->andFilterWhere(['IS', 'status', NULL]) //kategori 'asset'
+            ->orFilterWhere(['<', 'status', PeminjamanBarang::TERIMA_USULAN]); //kategori 'asset'
         return [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -136,7 +142,7 @@ class AsetUsulanController extends Controller
         $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         Yii::$app->response->format = Response::FORMAT_JSON;
         foreach ($pks as $pk) {
-            $model = PeminjamanBarang::findOne(['id' => $pk]);
+            $model = PeminjamanBarang::findOne(['id' => $pk, 'status' => NULL]);
             if ($model) {
                 $model->tanggal = date('Y-m-d');
                 if (empty($model->jumlah)) {

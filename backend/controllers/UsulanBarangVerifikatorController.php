@@ -148,6 +148,16 @@ class UsulanBarangVerifikatorController extends Controller
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post())) {
+                if ($model->checkStock < 1) {
+                    return [
+                        'forceReload' => '#verifikasi-usulan-pjax',
+                        'size' => 'small',
+                        'title' => "Terima Bersyarat",
+                        'content' => '
+                            <div class="alert alert-danger">Jumlah tidak boleh melebihi stok</div>',
+                        'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                    ];
+                }
                 $id_verifikator  = Yii::$app->user->identity->id;
                 if ($model->setTahap(PengusulanBarang::TERIMA_BERSYARAT_VERIFIKATOR, $model->keterangan, $id_verifikator)) {
                     return [
@@ -156,7 +166,7 @@ class UsulanBarangVerifikatorController extends Controller
                         'title' => "Terima Bersyarat",
                         'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-                                <img src="/img/success.gif width="150" >
+                                <img src="/img/success.gif" width="150" >
                                 <span style="font-size:14px;font-weight:400;line-height:21px;">Berhasil melakukan penolakan</span>
                             </div>',
                         'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])

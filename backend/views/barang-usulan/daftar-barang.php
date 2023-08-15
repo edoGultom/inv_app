@@ -107,7 +107,7 @@ use yii\bootstrap5\ActiveForm;
                                         'data-confirm-title' => 'Tambah',
                                         'data-confirm-ok' => 'Yakin',
                                         'data-confirm-cancel' => 'Kembali',
-                                        'data-confirm-message' => 'Apakah kamu yakin ingin menghapus Barang ini?'
+                                        'data-confirm-message' => 'Apakah kamu yakin ingin menambah barang ini ke list?'
                                     ]) ?>
                             </tr>
                         <?php

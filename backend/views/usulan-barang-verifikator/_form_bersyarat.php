@@ -17,6 +17,7 @@ use yii\helpers\Url;
     <p class="tx-12">Terima Bersayarat, dilakukan jika jumlah barang yang diusulkan mendekati stok</p>
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'jumlah')->textInput()->label('Jumlah') ?>
     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6])->label('Alasan') ?>
 
     <?php ActiveForm::end(); ?>

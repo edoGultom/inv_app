@@ -81,7 +81,7 @@ class PengusulanBarang extends \yii\db\ActiveRecord
         $this->status = $tahap;
         $this->keterangan = $keterangan;
         $this->id_verifikator = $id_verifikator;
-        if ($this->save()) {
+        if ($this->save(false)) {
             return true;
         }
         return false;

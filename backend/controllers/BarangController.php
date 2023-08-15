@@ -107,7 +107,7 @@ class BarangController extends Controller
                     'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
-            } else if ($model->load($request->post()) && $model->save()) {
+            } else if ($model->load($request->post()) && $model->saveTransaksiMasuk() && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Tambah Barang",
@@ -201,7 +201,12 @@ class BarangController extends Controller
             /*
             * Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post())) {
+                if ($isUpdateStock == 'yes') {
+                    $model->saveTransaksiMasuk();
+                }
+
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [

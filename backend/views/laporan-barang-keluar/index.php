@@ -48,16 +48,16 @@ $this->title = "Laporan Barang Keluar";
                         <?php
                         $total = 0;
                         foreach ($modelBarangKeluar as $key => $value) {
-                            $nama = ucwords(strtolower($value->transaksiKeluar->pengusul)) ?? '-';
-                            $unit = ucwords(strtolower($value->transaksiKeluar->unitPengusul)) ?? '-';
-                            $barang = ucwords(strtolower($value->barang->nama_barang)) ?? '-';
+                            $nama = ucwords(strtolower($value->transaksiKeluar->pengusul ?? '-'));
+                            $unit = ucwords(strtolower($value->transaksiKeluar->unitPengusul ?? '-'));
+                            $barang = ucwords(strtolower($value->barang->nama_barang ?? '-'));
                             $total +=  $value->jumlah;
                         ?>
                             <tr>
                                 <td class="tx-nowrap"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
                                 <td class="tx-nowrap  tx-color-03"><?= $nama . '<br/>' . $unit ?></td>
                                 <td class="d-none d-sm-table-cell tx-color-03"><?= $barang ?></td>
-                                <td class="tx-center"><?= Yii::$app->formatter->asDate($value->transaksiKeluar->tanggal, 'php:d/m/Y') ?></td>
+                                <td class="tx-center"><?= Yii::$app->formatter->asDate($value->transaksiKeluar->tanggal ?? NULL, 'php:d/m/Y') ?></td>
                                 <td class="tx-right"><?= $value->jumlah ?></td>
                             </tr>
                         <?php

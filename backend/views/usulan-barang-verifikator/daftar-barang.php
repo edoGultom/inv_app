@@ -51,7 +51,7 @@ use yii\widgets\Pjax;
             </div>
         </div><!-- card-header -->
         <div class="card-body pd-y-30">
-            <div class="d-sm-flex gap-3">
+            <div class="d-sm-flex gap-3 flex-wrap">
                 <?php
                 foreach ($refStatus as $key => $value) {
                     $bgColor = $value->getBgColor($value->id);
@@ -66,7 +66,7 @@ use yii\widgets\Pjax;
                                 <?= $value->keterangan ?></h6>
 
                             <h4 class="tx-20 tx-sm-18 tx-md-20 tx-normal tx-rubik mg-b-0">
-                                <?= $value->jlhStatus ?> </h4>
+                                <?= $value->jlhStatusBarang ?> </h4>
                         </div>
                     </div>
                 <?php
@@ -110,39 +110,48 @@ use yii\widgets\Pjax;
                                     <div>Stok : <span class="tx-teal"><?= $value->barang->stok ?> </span></div>
                                     <div>Jumlah Permintaan (<small>Qty</small>) : <?= $jlh ?></div>
                                 </td>
-                                <td align="center">
-                                    <?= Html::a(
-                                        '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 tx-success"></i>',
-                                        ['terima', 'id' => $value->id],
-                                        [
-                                            'role' => 'modal-remote',
-                                            'title' => 'Terima',
-                                            'data-confirm' => false, 'data-method' => false, // for overide yii data api
-                                            'data-request-method' => 'post',
-                                            'data-toggle' => 'tooltip',
-                                            'data-confirm-title' => 'Konfirmasi',
-                                            'data-confirm-ok' => 'Terima',
-                                            'data-confirm-cancel' => 'Tutup',
-                                            'class' => 'btn m-1',
-                                            'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
-                                        ]
-                                    ) . Html::a(
-                                        '<i class="fa-2x fa-solid fa-check-to-slot wd-12 ht-12 stroke-wd-3 tx-warning"></i>',
-                                        ['terima-bersyarat', 'id' => $value->id],
-                                        [
-                                            'role' => 'modal-remote',
-                                            'title' => 'Terima Bersyarat',
-                                            'class' => 'btn m-1',
-                                        ]
-                                    ) . Html::a(
-                                        '<i class="fa-2x fa-solid fa-square-xmark wd-12 ht-12 stroke-wd-3 text-danger"></i>',
-                                        ['tolak', 'id' => $value->id],
-                                        [
-                                            'role' => 'modal-remote',
-                                            'title' => 'Tolak',
-                                            'class' => 'btn m-1',
-                                        ]
-                                    ); ?>
+                                <td align="center ">
+                                    <div class="d-flex flex-wrap">
+                                        <?php
+                                        $btn = '';
+                                        if ($value->checkStock > 1) {
+                                            $btn .= Html::a(
+                                                '<i class="fa-2x fa-solid fa-square-check wd-12 ht-12 stroke-wd-3 tx-success"></i>',
+                                                ['terima', 'id' => $value->id],
+                                                [
+                                                    'role' => 'modal-remote',
+                                                    'title' => 'Terima',
+                                                    'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                                                    'data-request-method' => 'post',
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-confirm-title' => 'Konfirmasi',
+                                                    'data-confirm-ok' => 'Terima',
+                                                    'data-confirm-cancel' => 'Tutup',
+                                                    'class' => 'btn m-1',
+                                                    'data-confirm-message' => 'Apakah Anda Yakin Ingin Menerima Data ini ???',
+                                                ]
+                                            );
+                                        }
+                                        $btn .= Html::a(
+                                            '<i class="fa-2x fa-solid fa-check-to-slot wd-12 ht-12 stroke-wd-3 tx-warning"></i>',
+                                            ['terima-bersyarat', 'id' => $value->id],
+                                            [
+                                                'role' => 'modal-remote',
+                                                'title' => 'Terima Bersyarat',
+                                                'class' => 'btn m-1',
+                                            ]
+                                        ) . Html::a(
+                                            '<i class="fa-2x fa-solid fa-square-xmark wd-12 ht-12 stroke-wd-3 text-danger"></i>',
+                                            ['tolak', 'id' => $value->id],
+                                            [
+                                                'role' => 'modal-remote',
+                                                'title' => 'Tolak',
+                                                'class' => 'btn m-1',
+                                            ]
+                                        );
+                                        ?>
+                                        <?= $btn ?>
+                                    </div>
                             </tr>
                         <?php
                         }
