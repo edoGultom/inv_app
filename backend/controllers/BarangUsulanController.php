@@ -165,7 +165,18 @@ class BarangUsulanController extends Controller
         $model->tanggal = date('Y-m-d');
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->setTahap(PengusulanBarang::KIRIM_USULAN)) {
+            if ($model->jumlah < 1) {
+                return [
+                    'title' => "Peringatan",
+                    'forceReload' => '#crud-datatable-usulan-pjax',
+                    'size' => "small",
+                    'content' => '
+                    <div class="alert alert-danger">
+                       Jumlah yang dimasukkan minimal  1
+                    </div>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                ];
+            } else if ($model->setTahap(PengusulanBarang::KIRIM_USULAN)) {
                 return [
                     'title' => "Informasi",
                     'forceReload' => '#crud-datatable-usulan-pjax',
@@ -228,9 +239,21 @@ class BarangUsulanController extends Controller
         $model->id_barang = $id;
         $model->cepat_kode_unit = Yii::$app->user->identity->cepat_kode_unit;
         $model->nama_barang = $barang->nama_barang;
-        $model->save(false);
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
+            if (PengusulanBarang::find()->where(['id_barang' => $id, 'id_user' => Yii::$app->user->identity->id])->exists()) {
+                return [
+                    'forceReload' => '#crud-datatable-usulan-pjax',
+                    'size' => "small",
+                    'title' => "Peringatan!",
+                    'content' => '
+                        <div class="alert alert-warning">
+                          Barang sudah ditambahkan kedalam list, silahkan pilih barang lainnya
+                        </div>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                ];
+            }
+            $model->save();
             // return [
             //     'forceReload' => '#crud-datatable-usulan-pjax',
             //     'size' => "small",

@@ -103,9 +103,30 @@ class Barang extends \yii\db\ActiveRecord
             throw $e;
         }
     }
+    public function saveTransaksiMasukNewRecord()
+    {
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = new TransaksiMasuk();
+            $model->id_barang = $this->id;
+            $model->tanggal = date('Y-m-d');
+            $model->keterangan = $this->keterangan;
+            if ($model->save() && $model->saveDetail($this->stok)) {
+                $transaction->commit();
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
     public function saveTransaksiMasuk()
     {
-
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {

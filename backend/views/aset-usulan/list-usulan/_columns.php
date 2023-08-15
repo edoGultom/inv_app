@@ -45,6 +45,10 @@ return [
         'label' => 'Jumlah (Qty)',
         'attribute' => 'jumlah',
         'refreshGrid' => true,
+        'value' => function ($model) {
+            $jumlah = isset($model->jumlah) ? $model->jumlah : 0;
+            return $jumlah . ' ' . ucwords($model->barang->refSatuan->satuan ?? 0);
+        },
         'editableOptions' => function ($model, $key, $index, $column) {
             return [
                 'name' => 'jumlah',
@@ -53,7 +57,7 @@ return [
                 'size' => 'sm',
                 'options' => [
                     'class' => 'form-control disabled',
-                    'disabled' => $model->status > 0,
+                    'disabled' => $model->status > 0 && $model->status < 99,
                     'name' => 'jumlah'
                 ],
             ];

@@ -107,7 +107,7 @@ class BarangController extends Controller
                     'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-danger', 'type' => "submit"])
                 ];
-            } else if ($model->load($request->post()) && $model->saveTransaksiMasuk() && $model->save()) {
+            } else if ($model->load($request->post()) && $model->save() && $model->saveTransaksiMasukNewRecord()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Tambah Barang",
@@ -120,6 +120,7 @@ class BarangController extends Controller
                         Html::a('Tambah Lagi', ['create'], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
                 ];
             } else {
+
                 return [
                     'title' => "Tambah Barang",
                     'content' => $this->renderAjax('create', [

@@ -5,16 +5,16 @@ use yii\helpers\Url;
 use kartik\editable\Editable;
 
 return [
-//    [
-//        'class' => 'kartik\grid\CheckboxColumn',
-//        'width' => '2%',
-//     ],
+    //    [
+    //        'class' => 'kartik\grid\CheckboxColumn',
+    //        'width' => '2%',
+    //     ],
     [
-        'class' => 'kartik\grid\CheckboxColumn', 
-       'width' => '2%',
-       'checkboxOptions' => function($model) {
-              return ['value' => $model->id];
-          },
+        'class' => 'kartik\grid\CheckboxColumn',
+        'width' => '2%',
+        'checkboxOptions' => function ($model) {
+            return ['value' => $model->id];
+        },
     ],
     [
         'class' => 'kartik\grid\SerialColumn',
@@ -42,10 +42,14 @@ return [
         'class' => '\kartik\grid\EditableColumn',
         'width' => '10%',
         'format' => 'raw',
-        'label' => 'Jumlah Barang (Qty)',
+        'label' => 'Jumlah / Satuan (Qty)',
         'attribute' => 'jumlah',
         'refreshGrid' => true,
-        'editableOptions' => function ($model, $key, $index, $column)  {
+        'value' => function ($model) {
+            $jumlah = isset($model->jumlah) ? $model->jumlah : 0;
+            return $jumlah . ' ' . ucwords($model->barang->refSatuan->satuan ?? 0);
+        },
+        'editableOptions' => function ($model, $key, $index, $column) {
             return [
                 'name' => 'jumlah',
                 'asPopover' => false,
@@ -53,7 +57,7 @@ return [
                 'size' => 'sm',
                 'options' => [
                     'class' => 'form-control disabled',
-                    'disabled' =>$model->status > 0 ,
+                    'disabled' => $model->status > 0 && $model->status < 99,
                     'name' => 'jumlah'
                 ],
             ];

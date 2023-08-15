@@ -109,7 +109,7 @@ class PenggunaController extends Controller
                         'model' => $model,
                         'role' => $role,
                     ]),
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
 
                 ];
@@ -118,8 +118,9 @@ class PenggunaController extends Controller
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Tambah Pengguna",
                     'content' => '<span class="text-success">Create Pengguna success</span>',
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+
 
                 ];
             } else {
@@ -129,7 +130,7 @@ class PenggunaController extends Controller
                         'model' => $model,
                         'role' => $role,
                     ]),
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
 
                 ];
@@ -168,7 +169,7 @@ class PenggunaController extends Controller
             if ($request->isGet) {
                 return [
                     'title' => "Ubah User",
-                    'size'=>'small',
+                    'size' => 'small',
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -178,7 +179,7 @@ class PenggunaController extends Controller
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
-                    'size'=>'small',
+                    'size' => 'small',
                     'title' => "Ubah User",
                     'content' => '
                             <div class="d-flex flex-column justify-content-center align-items-center gap-4">
@@ -190,7 +191,7 @@ class PenggunaController extends Controller
             } else {
                 return [
                     'title' => "Ubah User",
-                    'size'=>'small',
+                    'size' => 'small',
                     'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -330,7 +331,7 @@ class PenggunaController extends Controller
                         'user_id' => $id,
                         'AuthItem' => $AuthItem
                     ]),
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
 
                 ];
             } else if ($model->save(false)) {
@@ -339,7 +340,7 @@ class PenggunaController extends Controller
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Hak Akses",
                     'content' => '<span class="text-success">Hak Akses berhasil</span>',
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::a('Tambah Lagi', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
 
                 ];
@@ -351,7 +352,7 @@ class PenggunaController extends Controller
                         'user_id' => $id,
                         'AuthItem' => $AuthItem
                     ]),
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
                 ];
             }
         } else {
