@@ -109,18 +109,19 @@ class AsetPengembalianController extends Controller
         $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         Yii::$app->response->format = Response::FORMAT_JSON;
         foreach ($pks as $pk) {
-            $model = PeminjamanBarang::findOne(['id' => $pk, 'status' => NULL]);
+            $model = PeminjamanBarang::findOne(['id' => $pk]);
+
             if ($model) {
+                $pengembalianModel = new PengembalianBarang();
+                $pengembalianModel->id_peminjaman_barang = $model->id;
+                $pengembalianModel->jumlah = $model->jumlah;
+                $pengembalianModel->tanggal_pinjam = $model->tanggal_pinjam;
+                $pengembalianModel->tanggal_kembali = $model->tanggal_kembali;
+                $pengembalianModel->terlambat =  Yii::$app->helper->calculate2Date($model->tanggal_kembali, date('Y-m-d'));
+                $pengembalianModel->save();
+
                 $model->tanggal = date('Y-m-d');
-                if (empty($model->jumlah)) {
-                    return [
-                        'title' => "Informasi",
-                        'size' => "small",
-                        'content' => '<div class="alert alert-danger">Maaf, Jumlah(Qty) tidak boleh kosong!</div>',
-                        'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
-                    ];
-                }
-                $model->setTahap(PeminjamanBarang::KIRIM_USULAN);
+                $model->setTahap(PeminjamanBarang::KIRIM_USULAN_PENGEMBALIAN);
             }
         }
 

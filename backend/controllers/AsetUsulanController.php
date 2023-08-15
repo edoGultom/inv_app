@@ -86,12 +86,6 @@ class AsetUsulanController extends Controller
                 $result = $data->jumlah;
             }
 
-            // $tanggal_pinjam = NULL;
-            // $tanggal_kembali = NULL;
-            // if(isset($data['PeminjamanBarang'])){
-            //     $tanggal_pinjam = $data[0]['tanggal_pinjam'];
-            //     $tanggal_kembali = $data[0]['tanggal_kembali'];
-            // }
             if (isset($data->PeminjamanBarang)) {
                 $value = $data->PeminjamanBarang[0];
                 if (isset($value['tanggal_pinjam'])) {
@@ -129,7 +123,8 @@ class AsetUsulanController extends Controller
         $dataProvider->query
             ->innerJoinWith('barang')
             ->andFilterWhere(['id_user' =>  Yii::$app->user->identity->id])
-            ->andFilterWhere(['id_kategori' => 2]);
+            ->andFilterWhere(['id_kategori' => 2]) //kategori 'asset'
+            ->andFilterWhere(['<', 'status', PeminjamanBarang::TERIMA_USULAN]); //kategori 'asset'
         return [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -141,7 +136,7 @@ class AsetUsulanController extends Controller
         $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         Yii::$app->response->format = Response::FORMAT_JSON;
         foreach ($pks as $pk) {
-            $model = PeminjamanBarang::findOne(['id' => $pk, 'status' => NULL]);
+            $model = PeminjamanBarang::findOne(['id' => $pk]);
             if ($model) {
                 $model->tanggal = date('Y-m-d');
                 if (empty($model->jumlah)) {
