@@ -45,7 +45,7 @@ $this->title = "Laporan Barang Masuk";
                                 <td class="tx-nowrap"><?= $value->barang->refKategori->kategori ?? '-' ?></td>
                                 <td class="d-none d-sm-table-cell tx-color-03"><?= $barang ?></td>
                                 <td style="text-align:center"><?= Yii::$app->formatter->asDate($value->transaksiMasuk->tanggal, 'php:d/m/Y') ?></td>
-                                <td class="tx-nowrap  tx-color-03" style="text-align:right"><?= $value->barang->stok ?></td>
+                                <td class="tx-nowrap  tx-color-03" style="text-align:right"><?= $value->jumlah ?></td>
                             </tr>
                         <?php
                         }
