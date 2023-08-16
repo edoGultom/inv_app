@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use common\models\DetailTransaksiKeluar;
-use common\models\DetailTransaksiMasuk;
 use common\models\TransaksiKeluar;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -54,15 +53,38 @@ class LaporanBarangKeluarController extends \yii\web\Controller
         return $this->render('index', [
             'modelBarangKeluar' => $modelBarangKeluar,
             'filter' => $filter,
-            'count' => $count
+            'count' => $count,
+            'chooseTanggal' => $chooseTanggal,
+            'chooseUnit' => $chooseUnit
         ]);
     }
-    public function actionCetak()
+    public function actionLaporanBarangKeluar($chooseTanggal = NULL, $chooseUnit = NULL)
     {
-        $modelBarangKeluar =  DetailTransaksiKeluar::find()->all();
+
+        $model = DetailTransaksiKeluar::find()
+            ->innerJoinWith('transaksiKeluar')
+            ->leftJoin("pengusulan_barang", 'pengusulan_barang.id = transaksi_keluar.id_pengusulan')
+            ->leftJoin("peminjaman_barang", 'transaksi_keluar.id_peminjaman = peminjaman_barang.id')
+            ->InnerJoin("`user`", 'pengusulan_barang.id_user = user.id or peminjaman_barang.id_user = user.id');
+
+
+        if (!empty($chooseTanggal)) {
+            $expDate = explode(' s/d ', $chooseTanggal);
+            $tanggalStart = (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[0], 'php:Y-m-d') : NULL;
+            $tanggalEnd =  (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[1], 'php:Y-m-d') : NULL;
+            $model->where(['between', 'transaksi_keluar.tanggal', $tanggalStart, $tanggalEnd]);
+        }
+        if (!empty($chooseUnit)) {
+            $unit =  Yii::$app->helper->getTrimCepatKodeV2($chooseUnit);
+            $model->andWhere(['like', "user.cepat_kode_unit", $unit]);
+        }
+
+        $count = $model->sum('detail_transaksi_keluar.jumlah');
+        $modelBarangKeluar = $model->orderBy(['transaksi_keluar.tanggal' => SORT_ASC])->all();
 
         $content = $this->renderPartial('cetak', [
             'modelBarangKeluar' => $modelBarangKeluar,
+            'count' => $count,
         ]);
 
         $cssInline = "

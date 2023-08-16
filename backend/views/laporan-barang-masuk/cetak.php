@@ -53,7 +53,7 @@ $this->title = "Laporan Barang Masuk";
                         <tr>
                             <td colspan="2">Notes</td>
                             <td style="text-align:center"><strong>Total Barang</strong></td>
-                            <td style="text-align:right"><strong><?= $total ?></strong></td>
+                            <td style="text-align:right"><strong><?= $count ?></strong></td>
                         </tr>
 
 

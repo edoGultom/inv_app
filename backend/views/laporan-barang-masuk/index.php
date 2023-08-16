@@ -68,7 +68,7 @@ $this->title = "Laporan Barang Masuk";
                     <h1 class="tx-normal tx-color-04 mg-b-10 tx-spacing--2">BADAN KEPEGAWAIAN (BAPEG)</h1>
                 </div><!-- col -->
                 <div class="col-sm-6 tx-right d-md-block">
-                    <?= Html::a('<i class="fas fa-print" class="mg-r-5"></i> Print', ['cetak'], [
+                    <?= Html::a('<i class="fas fa-print" class="mg-r-5"></i> Print', ['laporan-barang-masuk', 'chooseTanggal' => $chooseTanggal], [
                         'class' => 'btn btn-white',
                         'data-pjax' => 0,
                         'target' => '_blank',

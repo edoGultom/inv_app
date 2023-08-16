@@ -66,10 +66,19 @@ $this->title = "Laporan Barang Keluar";
     <div class="content tx-13">
         <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
             <div class="row">
-                <div class="col-sm-12 tx-right d-none d-md-block">
+                <div class="col-sm-6 tx-left d-none d-md-block">
                     <label class="tx-sans tx-uppercase tx-10 tx-medium tx-spacing-1 tx-color-03">Provinsi Sumatera Utara</label>
                     <h1 class="tx-normal tx-color-04 mg-b-10 tx-spacing--2">BADAN KEPEGAWAIAN (BAPEG)</h1>
                 </div><!-- col -->
+                <div class="col-sm-6 tx-right d-md-block">
+                    <?= Html::a('<i class="fas fa-print" class="mg-r-5"></i> Print', ['laporan-barang-keluar', 'chooseTanggal' => $chooseTanggal, 'chooseUnit' => $chooseUnit], [
+                        'class' => 'btn btn-white',
+                        'data-pjax' => 0,
+                        'target' => '_blank',
+                        'title' => 'Print',
+                        'data-toggle' => 'tooltip'
+                    ]); ?>
+                </div>
             </div><!-- row -->
 
             <div class="table-responsive mg-t-40">

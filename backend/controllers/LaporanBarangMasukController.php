@@ -46,15 +46,39 @@ class LaporanBarangMasukController extends \yii\web\Controller
         return $this->render('index', [
             'modelBarangMasuk' => $modelBarangMasuk,
             'filter' => $filter,
-            'count' => $count
+            'count' => $count,
+            'chooseTanggal' => $chooseTanggal
         ]);
     }
-    public function actionCetak()
+    public function actionLaporanBarangMasuk($chooseTanggal = NULL)
     {
-        $modelBarangMasuk =  DetailTransaksiMasuk::find()->all();
+
+        $model = DetailTransaksiMasuk::find()
+            ->innerJoinWith('transaksiMasuk')
+            ->InnerJoin("`user`", 'transaksi_masuk.id_user = user.id');
+
+        if (isset($chooseTanggal)) {
+            // echo "<pre>";
+            // print_r($chooseTanggal);
+            // echo "</pre>";
+            // exit();
+            $expDate = explode(' s/d ', $chooseTanggal);
+            $tanggalStart = (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[0], 'php:Y-m-d') : NULL;
+            $tanggalEnd =  (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[1], 'php:Y-m-d') : NULL;
+            $model->where(['between', 'tanggal', $tanggalStart, $tanggalEnd]);
+        }
+        // echo "<pre>";
+        // print_r($chooseUnit);
+        // print_r($chooseTanggal);
+        // echo "</pre>";
+        // exit();
+        $count = $model->sum('jumlah');
+        $modelBarangMasuk = $model->orderBy(['tanggal' => SORT_ASC])->all();
+
 
         $content = $this->renderPartial('cetak', [
             'modelBarangMasuk' => $modelBarangMasuk,
+            'count' => $count,
         ]);
 
         $cssInline = "
