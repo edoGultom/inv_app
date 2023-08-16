@@ -73,7 +73,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
-            $model = new DetailTransaksikeluar();
+            $model = new DetailTransaksiKeluar();
             $model->id_transaksi_keluar = $this->id;
             $model->id_barang = $this->id_barang;
             $model->jumlah = $jumlah;
