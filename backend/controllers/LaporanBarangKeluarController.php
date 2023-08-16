@@ -15,11 +15,12 @@ class LaporanBarangKeluarController extends \yii\web\Controller
         $filter = new TransaksiKeluar();
         $model = DetailTransaksiKeluar::find()
             ->innerJoinWith('transaksiKeluar')
-            ->InnerJoin("`user`", 'transaksi_keluar.id_user = user.id');
+            ->leftJoin("pengusulan_barang", 'pengusulan_barang.id = transaksi_keluar.id_pengusulan')
+            ->leftJoin("peminjaman_barang", 'transaksi_keluar.id_peminjaman = peminjaman_barang.id')
+            ->InnerJoin("`user`", 'pengusulan_barang.id_user = user.id or peminjaman_barang.id_user = user.id');
 
         $chooseUnit = '';
         $chooseTanggal = null;
-        $count = 0;
         if ($dataPost = Yii::$app->request->get()) {
             $data = $dataPost['TransaksiKeluar'];
             $chooseUnit = $data['unit'];
@@ -34,21 +35,21 @@ class LaporanBarangKeluarController extends \yii\web\Controller
 
                 $tanggalStart = (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[0], 'php:Y-m-d') : NULL;
                 $tanggalEnd =  (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[1], 'php:Y-m-d') : NULL;
-                $model->where(['between', 'tanggal', $tanggalStart, $tanggalEnd]);
+                $model->where(['between', 'transaksi_keluar.tanggal', $tanggalStart, $tanggalEnd]);
             }
 
-            $model->andWhere(['like', "cepat_kode_unit", $unit]);
+            $model->andWhere(['like', "user.cepat_kode_unit", $unit]);
             $filter->unit = $chooseUnit;
             $filter->tanggal = $chooseTanggal;
-            $count = $model->sum('jumlah');
         }
+
         // echo "<pre>";
         // print_r($chooseUnit);
         // print_r($chooseTanggal);
         // echo "</pre>";
         // exit();
-
-        $modelBarangKeluar = $model->orderBy(['tanggal' => SORT_ASC])->all();
+        $count = $model->sum('detail_transaksi_keluar.jumlah');
+        $modelBarangKeluar = $model->orderBy(['transaksi_keluar.tanggal' => SORT_ASC])->all();
 
         return $this->render('index', [
             'modelBarangKeluar' => $modelBarangKeluar,

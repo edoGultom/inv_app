@@ -28,13 +28,8 @@ $this->title = "Laporan Barang Masuk";
                         ]
                     ]); ?>
                     <div class="d-flex flex-row justify-content-end gap-2">
-                        <div class="">
-                            <?= $form->field($filter, 'unit')->dropdownlist(
-                                $filter->dataUnit,
-                                ['prompt' => '-Semua Bidang-']
-                            )->label(false) ?>
-                        </div>
-                        <div class="w-25">
+
+                        <div class="w-50">
                             <?= $form->field($filter, 'tanggal', [
                                 'addon' => ['prepend' => ['content' => '<i class="fas fa-calendar-alt"></i>']],
                                 'options' => ['class' => 'drp-container', 'placeholder' => 'Select range...'],

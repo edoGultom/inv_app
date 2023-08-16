@@ -16,14 +16,11 @@ class LaporanBarangMasukController extends \yii\web\Controller
             ->innerJoinWith('transaksiMasuk')
             ->InnerJoin("`user`", 'transaksi_masuk.id_user = user.id');
 
-        $chooseUnit = '';
         $chooseTanggal = null;
-        $count = 0;
         if ($dataPost = Yii::$app->request->get()) {
             $data = $dataPost['TransaksiMasuk'];
-            $chooseUnit = $data['unit'];
             $chooseTanggal = $data['tanggal'];
-            $unit =  Yii::$app->helper->getTrimCepatKodeV2($data['unit']);
+
             $tanggal =  $data['tanggal'];
             $tanggalStart = NULL;
             $tanggalEnd = NULL;
@@ -36,17 +33,14 @@ class LaporanBarangMasukController extends \yii\web\Controller
                 $model->where(['between', 'tanggal', $tanggalStart, $tanggalEnd]);
             }
 
-            $model->andWhere(['like', "cepat_kode_unit", $unit]);
-            $filter->unit = $chooseUnit;
             $filter->tanggal = $chooseTanggal;
-            $count = $model->sum('jumlah');
         }
         // echo "<pre>";
         // print_r($chooseUnit);
         // print_r($chooseTanggal);
         // echo "</pre>";
         // exit();
-
+        $count = $model->sum('jumlah');
         $modelBarangMasuk = $model->orderBy(['tanggal' => SORT_ASC])->all();
 
         return $this->render('index', [
