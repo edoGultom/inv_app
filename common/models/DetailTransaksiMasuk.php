@@ -53,4 +53,11 @@ class DetailTransaksiMasuk extends \yii\db\ActiveRecord
     {
         return $this->hasOne(TransaksiMasuk::className(), ['id' => 'id_transaksi_masuk']);
     }
+    public function getUserPegawai()
+    {
+        $model =  $this->hasOne(TransaksiMasuk::className(), ['id' => 'id_transaksi_masuk'])->one();
+        if ($model) {
+            return User::findOne(['id' => $model->id]);
+        }
+    }
 }

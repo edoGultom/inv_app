@@ -5,6 +5,7 @@ namespace common\models;
 use common\components\UserBehavior;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "transaksi_keluar".
@@ -31,6 +32,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
             UserBehavior::className(),
         ];
     }
+    public $unit;
 
     /**
      * {@inheritdoc}
@@ -40,7 +42,7 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
         return [
             [['id_pengusulan', 'id_barang', 'id_user'], 'default', 'value' => null],
             [['id_pengusulan', 'id_peminjaman', 'id_barang', 'id_user'], 'integer'],
-            [['tanggal'], 'safe'],
+            [['tanggal', 'unit'], 'safe'],
             [['keterangan'], 'string'],
         ];
     }
@@ -60,7 +62,12 @@ class TransaksiKeluar extends \yii\db\ActiveRecord
             'keterangan' => 'Keterangan',
         ];
     }
-
+    public function getDataUnit()
+    {
+        return ArrayHelper::map(RefUnit::find()->all(), 'cepat_kode', function ($model) {
+            return $model->cepat_kode . ' - ' . $model->nama_unit;
+        });
+    }
     public function saveDetail($jumlah)
     {
         $connection = Yii::$app->db;

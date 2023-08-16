@@ -25,7 +25,9 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "kartik-v/yii2-widget-activeform": "@dev",
         "kartik-v/yii2-datecontrol": "@dev",
-        "kartik-v/bootstrap-fileinput": "@dev"
+        "kartik-v/bootstrap-fileinput": "@dev",
+        "kartik-v/yii2-field-range": "dev-master",
+        "kartik-v/yii2-date-range": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

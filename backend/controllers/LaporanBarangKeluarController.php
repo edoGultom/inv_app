@@ -4,15 +4,56 @@ namespace backend\controllers;
 
 use common\models\DetailTransaksiKeluar;
 use common\models\DetailTransaksiMasuk;
+use common\models\TransaksiKeluar;
 use kartik\mpdf\Pdf;
+use Yii;
 
 class LaporanBarangKeluarController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $modelBarangKeluar = DetailTransaksiKeluar::find()->all();
+        $filter = new TransaksiKeluar();
+        $model = DetailTransaksiKeluar::find()
+            ->innerJoinWith('transaksiKeluar')
+            ->InnerJoin("`user`", 'transaksi_keluar.id_user = user.id');
+
+        $chooseUnit = '';
+        $chooseTanggal = null;
+        $count = 0;
+        if ($dataPost = Yii::$app->request->get()) {
+            $data = $dataPost['TransaksiKeluar'];
+            $chooseUnit = $data['unit'];
+            $chooseTanggal = $data['tanggal'];
+            $unit =  Yii::$app->helper->getTrimCepatKodeV2($data['unit']);
+            $tanggal =  $data['tanggal'];
+            $tanggalStart = NULL;
+            $tanggalEnd = NULL;
+
+            if (!empty($tanggal)) {
+                $expDate = explode(' s/d ', $data['tanggal']);
+
+                $tanggalStart = (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[0], 'php:Y-m-d') : NULL;
+                $tanggalEnd =  (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[1], 'php:Y-m-d') : NULL;
+                $model->where(['between', 'tanggal', $tanggalStart, $tanggalEnd]);
+            }
+
+            $model->andWhere(['like', "cepat_kode_unit", $unit]);
+            $filter->unit = $chooseUnit;
+            $filter->tanggal = $chooseTanggal;
+            $count = $model->sum('jumlah');
+        }
+        // echo "<pre>";
+        // print_r($chooseUnit);
+        // print_r($chooseTanggal);
+        // echo "</pre>";
+        // exit();
+
+        $modelBarangKeluar = $model->orderBy(['tanggal' => SORT_ASC])->all();
+
         return $this->render('index', [
-            'modelBarangKeluar' => $modelBarangKeluar
+            'modelBarangKeluar' => $modelBarangKeluar,
+            'filter' => $filter,
+            'count' => $count
         ]);
     }
     public function actionCetak()

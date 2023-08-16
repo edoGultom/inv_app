@@ -1,25 +1,64 @@
 <?php
 
 use yii\bootstrap5\Html;
+use yii\widgets\Pjax;
+// use yii\bootstrap5\ActiveForm;
+use kartik\form\ActiveForm;
+use kartik\datecontrol\DateControl;
+use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use kartik\daterange\DateRangePicker;
 
 $this->title = "Laporan Barang Keluar";
 ?>
 <div class="row row-xs">
     <div class="content content-fixed bd-b">
         <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
-            <div class="d-sm-flex align-items-center justify-content-between">
-                <div>
-                    <h4 class="mg-b-5"><?= $this->title ?></h4>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="">
+                    <h4 class="mg-b-0"><?= $this->title ?></h4>
                     <p class="mg-b-0 tx-color-03"><?= Yii::$app->formatter->asDate(date('Y-m-d'), 'php:d F Y') ?></p>
                 </div>
-                <div class="mg-t-20 mg-sm-t-0">
-                    <?= Html::a('<i class="fas fa-print" class="mg-r-5"></i> Print', ['cetak'], [
-                        'class' => 'btn btn-white',
-                        'data-pjax' => 0,
-                        'target' => '_blank',
-                        'title' => 'Print',
-                        'data-toggle' => 'tooltip'
+                <div class="flex-grow-1">
+                    <?php $form = ActiveForm::begin([
+                        'method' => 'get',
+                        'options' => [
+                            'id' => 'form-filter', 'data-pjax' => "1"
+                        ]
                     ]); ?>
+                    <div class="d-flex flex-row justify-content-end gap-2">
+                        <div class="">
+                            <?= $form->field($filter, 'unit')->dropdownlist(
+                                $filter->dataUnit,
+                                ['prompt' => '-Semua Bidang-']
+                            )->label(false) ?>
+                        </div>
+                        <div class="w-25">
+                            <?= $form->field($filter, 'tanggal', [
+                                'addon' => ['prepend' => ['content' => '<i class="fas fa-calendar-alt"></i>']],
+                                'options' => ['class' => 'drp-container', 'placeholder' => 'Select range...'],
+                            ])->widget(DateRangePicker::classname(), [
+                                'useWithAddon' => true,
+                                'convertFormat' => true,
+                                'pluginOptions' => [
+                                    'locale' => [
+                                        'format' => 'd-m-Y',
+                                        'separator' => ' s/d ',
+                                    ],
+                                ]
+                            ])->label(false); ?>
+                        </div>
+                        <div class="">
+                            <?= Html::submitButton(
+                                '<i class="fas fa-search"></i> Cari',
+                                [
+                                    'class' => 'btn btn-primary text-white rounded btn-search',
+                                    'data-pjax' => true
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div><!-- container -->

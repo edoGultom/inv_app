@@ -3,15 +3,56 @@
 namespace backend\controllers;
 
 use common\models\DetailTransaksiMasuk;
+use common\models\TransaksiMasuk;
+use Yii;
 use kartik\mpdf\Pdf;
 
 class LaporanBarangMasukController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $modelBarangMasuk = DetailTransaksiMasuk::find()->all();
+        $filter = new TransaksiMasuk();
+        $model = DetailTransaksiMasuk::find()
+            ->innerJoinWith('transaksiMasuk')
+            ->InnerJoin("`user`", 'transaksi_masuk.id_user = user.id');
+
+        $chooseUnit = '';
+        $chooseTanggal = null;
+        $count = 0;
+        if ($dataPost = Yii::$app->request->get()) {
+            $data = $dataPost['TransaksiMasuk'];
+            $chooseUnit = $data['unit'];
+            $chooseTanggal = $data['tanggal'];
+            $unit =  Yii::$app->helper->getTrimCepatKodeV2($data['unit']);
+            $tanggal =  $data['tanggal'];
+            $tanggalStart = NULL;
+            $tanggalEnd = NULL;
+
+            if (!empty($tanggal)) {
+                $expDate = explode(' s/d ', $data['tanggal']);
+
+                $tanggalStart = (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[0], 'php:Y-m-d') : NULL;
+                $tanggalEnd =  (!empty($expDate)) ? Yii::$app->formatter->asDate($expDate[1], 'php:Y-m-d') : NULL;
+                $model->where(['between', 'tanggal', $tanggalStart, $tanggalEnd]);
+            }
+
+            $model->andWhere(['like', "cepat_kode_unit", $unit]);
+            $filter->unit = $chooseUnit;
+            $filter->tanggal = $chooseTanggal;
+            $count = $model->sum('jumlah');
+        }
+        // echo "<pre>";
+        // print_r($chooseUnit);
+        // print_r($chooseTanggal);
+        // echo "</pre>";
+        // exit();
+
+        $modelBarangMasuk = $model->orderBy(['tanggal' => SORT_ASC])->all();
+
         return $this->render('index', [
-            'modelBarangMasuk' => $modelBarangMasuk
+            'modelBarangMasuk' => $modelBarangMasuk,
+            'filter' => $filter,
+            'count' => $count
         ]);
     }
     public function actionCetak()
