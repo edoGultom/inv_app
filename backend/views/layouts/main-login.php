@@ -33,7 +33,7 @@ AppAssetSignIn::register($this);
                 <div class="media-body align-items-center d-none d-lg-flex flex-column">
                     <div class="d-flex flex-column">
                         <span class="aside-logo tx-32">
-                            SIPBANG<span class="tx-24"> BAPEG PROVSU</span>
+                            SIPBANG<span class="tx-24"> BAPEG</span>
 
                         </span>
                         <p class="tx-14">Sistem Informasi Pendataan Barang</p>
