@@ -5,7 +5,7 @@ return [
         'db' => [
             'class' => '\yii\db\Connection',
             'dsn' => 'mysql:host=127.0.0.1;dbname=edogulto_sipbang',
-            'username' => 'mysql_sipbang',
+            'username' => 'edogulto_mysql_sipbang',
             'password' => 'sipbang2023',
             'charset' => 'utf8',
         ],
