@@ -161,13 +161,40 @@ class UsulanPengembalianAsetVerifikatorController extends Controller
                         Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
                 ];
             }
-        } else {
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
         }
     }
+    public function actionSelesai($id)
+    {
+        $request = Yii::$app->request;
+        $model = PeminjamanBarang::findOne($id);
+        $model->keterangan = NULL;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $id_verifikator  = Yii::$app->user->identity->id;
 
+            if ($model->setTahap(PeminjamanBarang::SELESAI_PENGEMBALIAN_VERIFIKATOR, NULL, $id_verifikator)) {
+                return [
+                    'title' => "Informasi",
+                    'forceReload' => '#crud-datatable-pjax',
+                    'size' => "small",
+                    'content' => '
+                        <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+                            <img src="/img/success.gif" width="150" >
+                            <span style="font-size:14px;font-weight:400;line-height:21px;">Selesai pengembalian</span>
+                        </div>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+                ];
+            } else {
+                return [
+                    'title' => "Informasi",
+                    'size' => "small",
+                    'content' => '<div class="alert alert-danger">Gagal memproses usulan</div>',
+                    'footer' => Html::button('Batal', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-danger', 'role' => 'modal-remote'])
+                ];
+            }
+        }
+    }
     /**
      * Creates a new PengembalianBarang model.
      * For ajax request will return json object

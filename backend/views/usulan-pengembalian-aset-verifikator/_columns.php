@@ -69,7 +69,7 @@ return [
                 if ($model->peminjaman->status == PeminjamanBarang::TERIMA_PENGEMBALIAN_VERIFIKATOR) {
                     return Html::a(
                         'Selesai',
-                        ['terima', 'id' => $model->id],
+                        ['selesai', 'id' => $model->id],
                         [
                             'role' => 'modal-remote',
                             'title' => 'Terima',
