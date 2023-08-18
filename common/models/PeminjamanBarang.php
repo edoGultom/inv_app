@@ -100,7 +100,7 @@ class PeminjamanBarang extends \yii\db\ActiveRecord
     }
     public function getTahap()
     {
-        $model = $this->hasOne(Refstatus::className(), ['id' => 'status'])->one();
+        $model = $this->hasOne(RefStatus::className(), ['id' => 'status'])->one();
         if ($model) {
             if ($this->status == 1) {
                 return '<span class="badge bg-primary-light tx-primary ">' . $model->keterangan . '</span>';
