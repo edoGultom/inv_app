@@ -131,7 +131,8 @@ class UsulanPengembalianAsetVerifikatorController extends Controller
 
             if ($model->setTahap(PeminjamanBarang::TERIMA_PENGEMBALIAN_VERIFIKATOR, NULL, $id_verifikator)) {
                 $barang = Barang::findOne(['id' => $model->id_barang]);
-                if ($barang && $model->saveTransaksiMasuk()) {
+                $barang->stok = $model->jumlah;
+                if ($barang && $barang->saveTransaksiMasuk()) {
                     return [
                         'title' => "Informasi",
                         'forceReload' => '#crud-datatable-pjax',
