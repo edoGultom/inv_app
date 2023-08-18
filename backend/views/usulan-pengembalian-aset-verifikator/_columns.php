@@ -24,7 +24,9 @@ return [
             return '<p class="text-muted">Kategori Barang</p>
             <p style="margin-top:-10px">' . ($model->peminjaman->barang->refKategori->label ?? '-') . '</p>
             <p class="text-muted">Nama Barang</p>
-            <p style="margin-top:-10px">' . ($model->peminjaman->barang->nama_barang ?? '-') . '</p>';
+            <p style="margin-top:-10px">' . ($model->peminjaman->barang->nama_barang ?? '-') . '</p>
+            <p class="text-muted">PEMINJAM</p>
+            <p style="margin-top:-10px">' . ($model->peminjaman->user->nama ?? '-') . '</p>';
         },
         'vAlign' => 'middle',
         'encodeLabel' => false,
