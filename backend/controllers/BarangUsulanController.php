@@ -241,7 +241,7 @@ class BarangUsulanController extends Controller
         $model->nama_barang = $barang->nama_barang;
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if (PengusulanBarang::find()->where(['id_barang' => $id, 'id_user' => Yii::$app->user->identity->id])->andWhere(['or', ['<', 'status', 1], ['IS NOT', 'status', NULL]])->exists()) {
+            if (PengusulanBarang::find()->where(['id_barang' => $id, 'id_user' => Yii::$app->user->identity->id])->andWhere(['or', ['<', 'status', 1], ['IS', 'status', NULL]])->exists()) {
                 return [
                     'forceReload' => '#crud-datatable-usulan-pjax',
                     'size' => "small",
