@@ -22,7 +22,7 @@ class BarangUsulanSearch extends PengusulanBarang
         return [
             [['id', 'id_barang', 'id_user', 'jumlah', 'status'], 'integer'],
             [['cepat_kode_unit', 'nama_barang', 'tanggal', 'keterangan'], 'safe'],
-            [['cari','rowdata'], 'safe'],
+            [['cari', 'rowdata'], 'safe'],
         ];
     }
 
@@ -61,16 +61,17 @@ class BarangUsulanSearch extends PengusulanBarang
             return $dataProvider;
         }
         $cari_angka = '';
-        if(is_numeric($this->cari)){
+        if (is_numeric($this->cari)) {
             $cari_angka = $this->cari;
         }
 
-        $query->andFilterWhere(['or',
+        $query->andFilterWhere([
+            'or',
             ['id' => $cari_angka],
             ['jumlah' => $cari_angka],
             ['tanggal' => $cari_angka],
-            ['like', 'lower(nama_barang)', strtolower($this->cari)],
-            ['like', 'lower(keterangan)', strtolower($this->cari)],
+            ['like', 'lower(pengusulan_barang.nama_barang)', strtolower($this->cari)],
+            ['like', 'lower(pengusulan_barang.keterangan)', strtolower($this->cari)],
         ]);
         // $query->andFilterWhere(['like', '', $this->cari]);
         return $dataProvider;
