@@ -89,14 +89,14 @@ return [
                 ]);
             },
             "stok_update" => function ($url, $model, $key) {
-                if ($model->isUpdateStock) { //jika barang sudah diusulkan/dipinjam maka akan muncul update/stok
-                    return Html::a('<span class="fas fa-file-pen" width="16" height="16" class="me-1 align-middle"></span> <i class=" tx-16"><u>Update Stok</u></i> ', ['update', 'id' => $model->id, 'isUpdateStock' => 'yes'], [
-                        'class' => 'tx-warning',
-                        'role' => 'modal-remote',
-                        'title' => 'Update Stok',
-                        'data-toggle' => 'tooltip'
-                    ]);
-                }
+                // if ($model->isUpdateStock) { //jika barang sudah diusulkan/dipinjam maka akan muncul update/stok
+                return Html::a('<span class="fas fa-file-pen" width="16" height="16" class="me-1 align-middle"></span> <i class=" tx-16"><u>Update Stok</u></i> ', ['update', 'id' => $model->id, 'isUpdateStock' => 'yes'], [
+                    'class' => 'tx-warning',
+                    'role' => 'modal-remote',
+                    'title' => 'Update Stok',
+                    'data-toggle' => 'tooltip'
+                ]);
+                // }
             },
         ]
     ],

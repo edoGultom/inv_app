@@ -24,7 +24,8 @@ use kartik\select2\Select2;
     ?>
     <?= $form->field($model, 'nama_barang')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'stok')->textInput(['disabled' => ($model->isUpdateStock) ? 'disabled' : false]) ?>
+    <?php // $form->field($model, 'stok')->textInput(['disabled' => ($model->isUpdateStock) ? 'disabled' : false]) 
+    ?>
     <?php
     echo $form->field($model, 'id_satuan')->widget(Select2::classname(), [
         'data' => $model->dataSatuan,
